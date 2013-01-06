@@ -23,6 +23,7 @@ Rune depends on:
 * GTK+3
 * libxml2
 * gtkspell3
+* Adwaita Theme (Theme switch won't work if not installed)
 
 Please make sure you have all that installed before compiling Rune.
 
