@@ -8,10 +8,12 @@ A novel planner and editor for creative writers.
 Rune is still under heavy development. So far, it is in its 0.0.1 version (see Roadmap). It means you **cannot save or load your project yet** Version 0.0.2 will  be available soon.
 For developpers: **This code is not documented yet**. You might want to wait a bit for version 0.1 before trying to read it.
 
+Though feel free to submit a bug, or a patch anytime you wish.
+
 # About
 
 ### Description
-Rune is a *tool for creative writers* meant to help them **plan** and **edit** their novels. 
+Rune is a GTK+ **tool for creative writers** meant to help them **plan** and **edit** their novels. 
 It lets you check your planning and advancement, your plot and characters while typing in a format-abstracted manner. Rune will export your manuscript in text, HTML or Epub format.
 
 ### Licence
