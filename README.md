@@ -17,6 +17,15 @@ It lets you check your planning and advancement, your plot and characters while 
 ### Licence
 Rune is licensed under the GPLv3 license. Thus it is free to use, copy, distribute or modify.
 
+### Dependencies
+
+Rune depends on: 
+*GTK+3
+*libxml2
+*gtkspell3
+
+Please make sure you have all that installed before compiling Rune.
+
 # Roadmap
 
 ### Version 0.0.x Series
