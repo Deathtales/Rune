@@ -20,9 +20,9 @@ Rune is licensed under the GPLv3 license. Thus it is free to use, copy, distribu
 ### Dependencies
 
 Rune depends on: 
-*GTK+3
-*libxml2
-*gtkspell3
+* GTK+3
+* libxml2
+* gtkspell3
 
 Please make sure you have all that installed before compiling Rune.
 
