@@ -30,8 +30,9 @@ LT_INIT
 
 
 
-PKG_CHECK_MODULES(RUNE, gtkspell-3.0
-[gtkmm-3.0 libxml-2.0])
+PKG_CHECK_MODULES(RUNE, libxml++-2.6
+gtkspell-3.0
+[gtkmm-3.0])
 
 
 
