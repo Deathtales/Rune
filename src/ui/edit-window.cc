@@ -233,6 +233,7 @@ void EditWindow::openNewTab(Section* sec){
 		int number = notebook->append_page(*sceneViewScrolled,*tabLabelBox, *Gtk::manage(new Gtk::Label(sec->name)));
 		notebook->set_scrollable();
 		notebook->popup_enable();
+		notebook->set_tab_reorderable(*sceneViewScrolled);
 		scene->is_opened = true;
 		tabButton->signal_clicked().connect( 
 		sigc::bind<Gtk::ScrolledWindow*,Gtk::Notebook*,Gtk::TextView*,Scene*>( 
