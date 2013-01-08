@@ -27,7 +27,6 @@ Section::Section( int type, Glib::ustring name, Glib::ustring desc){
 	this->prevSection = NULL;
 	this->toc = NULL;
 	this->progress = 0;
-	this->modified = false;
 }
 
 int Section::getType()
