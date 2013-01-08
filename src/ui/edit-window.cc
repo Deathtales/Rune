@@ -250,7 +250,7 @@ void EditWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::T
 		Gtk::MessageDialog dial(*currentProject->associatedWindow, 
 			                        "Des modifications ont été effectuées sur " + scene->name + "\nQue faire?", 
 			                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
-		dial.add_button(Gtk::Stock::DISCARD, Gtk::RESPONSE_REJECT);
+		dial.add_button(Gtk::Stock::CLEAR, Gtk::RESPONSE_REJECT);
 		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
 		int response = dial.run();
