@@ -250,7 +250,7 @@ void EditWindow::openNewTab(Section* sec){
 		Gtk::ScrolledWindow* sceneViewScrolled = Gtk::manage(new Gtk::ScrolledWindow);
 		sceneViewScrolled->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 		Gtk::TextView* sceneView = Gtk::manage(new Gtk::TextView);
-		sceneView->get_buffer()->set_text (scene->body);
+		sceneView->get_buffer()->set_text (scene->getBody());
 		sceneView->set_editable();
 		sceneView->set_wrap_mode(Gtk::WRAP_WORD);
 		sceneView->set_justification(Gtk::JUSTIFY_FILL);
@@ -277,7 +277,7 @@ void EditWindow::openNewTab(Section* sec){
 }
 
 void EditWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::TextView* tv, Scene* scene){
-	if(scene->body.compare(tv->get_buffer()->get_text()) != 0){
+	if(scene->getBody().compare(tv->get_buffer()->get_text()) != 0){
 		Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
 			                        "Des modifications ont été effectuées sur " + scene->name + "\nQue faire?", 
 			                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
@@ -286,7 +286,7 @@ void EditWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::T
 		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
 		int response = dial.run();
 		if(response == Gtk::RESPONSE_OK){
-			/*TODO save*/
+			    scene->setBody(tv->get_buffer()->get_text());
 				nb->remove_page(nb->page_num(*sw));
 				scene->is_opened = false;
 			}

@@ -43,7 +43,7 @@ class Scene: public Section
 {
 	public:
 
-		Glib::ustring body; /**< The body text of the scene*/
+
 		bool is_opened; /**< Indicates if the scene is opened in a tab.*/
 
 		/** \brief Constructor
@@ -54,11 +54,13 @@ class Scene: public Section
 		 */
 		Scene(Glib::ustring name,Glib::ustring desc);
 
-
+		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
+		Glib::ustring getBody();
+		void setBody(Glib::ustring content);
 	protected:
 
 	private:
-
+		Glib::ustring body; /**< The body text of the scene*/
 };
 
 #endif // _SCENE_H_

@@ -64,17 +64,21 @@ void Section::addSectionToToc(Section* sec){
 	}
 }
 
-void Section::saveSectionXmlUnder(xmlpp::Element* root){
+void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath){
 	xmlpp::Element* sec = root->add_child(getStringType(this->getType()));
+	Glib::ustring currentPath = 
+	Gio::File::create_for_uri(parentPath)->get_child(this->name)->get_uri();
 	sec->set_attribute("name", this->name);
 	std::ostringstream progressString;
 	progressString << this->progress;
 	sec->set_attribute("progress",(Glib::ustring) progressString.str());
 	xmlpp::Element* desc = sec->add_child("description");
 	desc->add_child_text(this->description);
+	xmlpp::Element* uri = sec->add_child("uri");
+	uri->add_child_text(currentPath);
 	Section* next = toc;
 	while(next != NULL){
-		next->saveSectionXmlUnder(sec);
+		next->saveSectionXmlUnder(sec, currentPath);
 		next = next->nextSection;
 	}
 }

@@ -31,6 +31,7 @@
 #define _ENTITY_H_
 #include <glibmm/ustring.h>
 #include <libxml++/document.h>
+#include <giomm/file.h>
 
 
 /**
@@ -108,7 +109,7 @@ class Section
 		 * Method that adds a child (corresponding to the current section) to the given root.
 		 * \param[out] root : The parent xml element.
 		 */
-		void saveSectionXmlUnder(xmlpp::Element* root);
+		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
 
 
 

@@ -40,7 +40,7 @@ void Project::save(){
 	desc->add_child_text(this->description);
 	Section* next = toc;
 	while(next != NULL){
-		next->saveSectionXmlUnder(root);
+		next->saveSectionXmlUnder(root, this->getPath());
 		next = next->nextSection;
 	}
 	Glib::RefPtr<Gio::File> runeFile = 

@@ -24,3 +24,29 @@ Scene::Scene(Glib::ustring name,Glib::ustring desc) : Section(SCENE,name,desc){
 	this->body = "";
 }
 
+void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
+	Section::saveSectionXmlUnder (root, parentPath);
+	Glib::RefPtr<Gio::File> dir = Gio::File::create_for_uri(parentPath);
+	Glib::RefPtr<Gio::File> sceneFile = dir->get_child(this->name + ".txt");
+	if(!dir->query_exists()){
+	dir->make_directory_with_parents ();
+	}
+	Glib::RefPtr<Gio::FileOutputStream> sceneStream;
+	if(sceneFile->query_exists() && this->getBody() != ""){
+		sceneStream = sceneFile->replace();
+		sceneStream->write(this->getBody());
+	}
+	else{
+		sceneStream = sceneFile->create_file();
+		sceneStream->write(this->getBody());
+	}
+	
+}
+
+Glib::ustring Scene::getBody(){
+	return body;
+}
+
+void Scene::setBody(Glib::ustring content){
+	this->body = content;
+}
