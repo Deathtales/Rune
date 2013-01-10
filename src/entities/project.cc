@@ -23,10 +23,39 @@
 
 
 Project::Project(Glib::ustring title, Glib::ustring desc, Gtk::Window* parent)
-	: Section::Section(PROJECT,title,desc){
+: Section::Section(PROJECT,title,desc){
 	this->path = "";
 	this->associatedWindow = parent;
 }
 
+Project::~Project(){
+
+}
+
+void Project::save(){
+	xmlpp::Document* xmlDoc = new xmlpp::Document();
+	xmlpp::Element* root = xmlDoc->create_root_node("Project");
+	root->set_attribute("name", this->name);
+	xmlpp::Element* desc = root->add_child("description");
+	desc->add_child_text(this->description);
+	Section* next = toc;
+	while(next != NULL){
+		next->saveSectionXmlUnder(root);
+		next = next->nextSection;
+	}
+	Glib::RefPtr<Gio::File> runeFile = 
+		Gio::File::create_for_uri(this->getPath())->get_child(this->name + ".rune");
+	xmlDoc->write_to_file_formatted (runeFile->get_uri());
+}
 
 
+void Project::setPath(Glib::ustring uri){
+	this->path = uri;
+}
+Glib::ustring Project::getPath(){
+	return this->path;
+}
+
+Gtk::Window* Project::getAssociatedWindow(){
+	return associatedWindow;
+}

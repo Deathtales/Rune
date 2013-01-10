@@ -64,6 +64,44 @@ void Section::addSectionToToc(Section* sec){
 	}
 }
 
+void Section::saveSectionXmlUnder(xmlpp::Element* root){
+	xmlpp::Element* sec = root->add_child(getStringType(this->getType()));
+	sec->set_attribute("name", this->name);
+	std::ostringstream progressString;
+	progressString << this->progress;
+	sec->set_attribute("progress",(Glib::ustring) progressString.str());
+	xmlpp::Element* desc = sec->add_child("description");
+	desc->add_child_text(this->description);
+	Section* next = toc;
+	while(next != NULL){
+		next->saveSectionXmlUnder(sec);
+		next = next->nextSection;
+	}
+}
+
+Glib::ustring Section::getStringType(int type){
+	switch(type){
+		case PROJECT:
+			return "Project";
+			break;
+		case BOOK:
+			return "Book";
+			break;
+		case PART:
+			return "Part";
+			break;
+		case CHAPTER:
+			return "Chapter";
+			break;
+		case SCENE:
+			return "Scene";
+			break;
+		default:
+			return "Scene";
+			break;
+	}
+}
+
 Section::~Section(){
 
 }

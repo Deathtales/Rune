@@ -22,18 +22,22 @@
 #include <glibmm/ustring.h>
 #include "entities/section.h"
 #include <gtkmm/window.h>
+#include <libxml++/document.h>
 
 class Project : public Section
 {
 public:
 	Project(Glib::ustring name, Glib::ustring desc, Gtk::Window* parent);
-	Glib::ustring path;
-	Gtk::Window* associatedWindow;
-
+	~Project();
+	Glib::ustring getPath();
+	Gtk::Window* getAssociatedWindow();
+	void save();
+	void setPath(Glib::ustring uri);
 protected:
 
 private:
-
+	Glib::ustring path;
+	Gtk::Window* associatedWindow;
 };
 
 #endif // _PROJECT_H_

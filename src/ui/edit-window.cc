@@ -60,6 +60,10 @@ EditWindow::EditWindow(){
 		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::SAVE));
 	saveProjectItem->signal_activate().connect(sigc::mem_fun(*this, &EditWindow::saveProject));
     fileMenu->append(*saveProjectItem);
+	Gtk::ImageMenuItem* saveProjectAsItem = 
+		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::SAVE_AS));
+	saveProjectAsItem->signal_activate().connect(sigc::mem_fun(*this, &EditWindow::saveProjectAs));
+    fileMenu->append(*saveProjectAsItem);
 	Gtk::SeparatorMenuItem* separator = Gtk::manage(new Gtk::SeparatorMenuItem);
     fileMenu->append(*separator);
 	Gtk::ImageMenuItem* quitItem = 
@@ -117,17 +121,44 @@ void EditWindow::createNewProject(){
 
 void EditWindow::saveProject(){
 	if(currentProject != NULL){
-		Gtk::FileChooserDialog dial(*currentProject->associatedWindow, 
-			                        "Sauvegarder" + currentProject->name + "?", 
-			                        Gtk::FILE_CHOOSER_ACTION_SAVE);
+		if(currentProject->getPath() !=""){
+			currentProject->save();
+		}
+		else{
+			this->saveProjectAs();
+	}
+}
+}
+
+void EditWindow::saveProjectAs(){
+	if(currentProject != NULL){
+		Gtk::FileChooserDialog dial(*currentProject->getAssociatedWindow(), 
+		                            "Sauvegarder " + currentProject->name + " dans quel dossier?", 
+		                            Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
 		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
+		//dial.set_uri(Glib::get_home_dir());
 		int response = dial.run();
 		if(response == Gtk::RESPONSE_OK){
-			
+			Glib::RefPtr<Gio::File> dir = dial.get_file()->get_child(currentProject->name);
+			if(dir->query_exists()){
+				Gtk::MessageDialog dial2(*currentProject->getAssociatedWindow (),
+				                         dir->get_path() + " contient déjà un dossier nommé " + currentProject->name + 
+				                         ".\nVeuillez en choisir un autre.", true,
+				                         Gtk::MESSAGE_WARNING,
+				                         Gtk::BUTTONS_OK, true);
+				dial2.run();
+				saveProjectAs();
+			}
+			else{
+				dir->make_directory_with_parents ();
+				currentProject->setPath(dir->get_uri());
+				saveProject();
+			}
 		}
 	}
 }
+
 
 void EditWindow::switchToLightMode(){
   Glib::RefPtr<Gtk::CssProvider> css = Gtk::CssProvider::create();
@@ -247,7 +278,7 @@ void EditWindow::openNewTab(Section* sec){
 
 void EditWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::TextView* tv, Scene* scene){
 	if(scene->body.compare(tv->get_buffer()->get_text()) != 0){
-		Gtk::MessageDialog dial(*currentProject->associatedWindow, 
+		Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
 			                        "Des modifications ont été effectuées sur " + scene->name + "\nQue faire?", 
 			                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
 		dial.add_button(Gtk::Stock::CLEAR, Gtk::RESPONSE_REJECT);

@@ -30,6 +30,8 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 #include <glibmm/ustring.h>
+#include <libxml++/document.h>
+
 
 /**
  * \enum SectionType
@@ -101,11 +103,25 @@ class Section
 		 * \param[in, out] sec : The section to add.
 		 */
 		void addSectionToToc(Section* sec);
+		
+		/** \brief Saves the section in Xml doc
+		 * Method that adds a child (corresponding to the current section) to the given root.
+		 * \param[out] root : The parent xml element.
+		 */
+		void saveSectionXmlUnder(xmlpp::Element* root);
+
+
 
 	protected:
 
 	private:
 		int type; /**< An int representing fonction type, according to SectionType.*/
+
+		/** \brief Converts a int type to a string
+		 * Method that converts a SectionType to a string representing it.
+		 * \param[in] type : the type to convert.
+		 */
+		Glib::ustring getStringType(int type);
 
 };
 

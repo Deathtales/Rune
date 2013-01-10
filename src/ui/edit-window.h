@@ -41,10 +41,9 @@
 #include <gtkmm/cssprovider.h>
 #include <iostream>
 #include "ui/structure-zone.h"
+#include <giomm/file.h>
 extern "C"{
 #include <gtkspell/gtkspell.h>
-#include <libxml/encoding.h>
-#include <libxml/xmlwriter.h>
 }
 
 #define MY_ENCODING "UTF-8"
@@ -66,6 +65,7 @@ private:
 	Gtk::HPaned* getDoublePaned(bool newProject);
 	void createNewProject();
 	void saveProject();
+	void saveProjectAs();
 	void switchToLightMode();
 	void switchToDarkMode();
 	void openNewTab(Section* scene);

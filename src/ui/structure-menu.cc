@@ -127,7 +127,7 @@ void StructureMenu::createNewScene(){
 }
 
 void StructureMenu::createNewResource(int type){
-	NewResourceDialog dial(type,NULL,currentProject->associatedWindow);
+	NewResourceDialog dial(type,NULL,currentProject->getAssociatedWindow());
 	int response = dial.run();
 	if(response == Gtk::RESPONSE_OK){
 		Section* sec;
@@ -145,7 +145,7 @@ void StructureMenu::createNewResource(int type){
 }
 
 void StructureMenu::editResource(){
-	NewResourceDialog dial(selected->getType(),NULL,currentProject->associatedWindow);
+	NewResourceDialog dial(selected->getType(),NULL,currentProject->getAssociatedWindow());
 	dial.setName(selected->name);
 	dial.setDescription(selected->description);
 	int response = dial.run();
@@ -158,7 +158,7 @@ void StructureMenu::editResource(){
 }
 
 void StructureMenu::removeResource(){
-	Gtk::MessageDialog dial(*currentProject->associatedWindow, 
+	Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
 	               "Voulez-vous vraiment supprimer " + selected->name + "?\nCeci supprimera également tout son contenu.", 
 	               true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK_CANCEL, true);
 	int response = dial.run();
