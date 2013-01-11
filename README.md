@@ -33,8 +33,8 @@ Please make sure you have all that installed before compiling Rune.
 ### Version 0.0.x Series
 
 ### Version 0.0.1
-- [ ] Text view for editing
-- [ ] TreeView with book structure
+- [x] Text view for editing
+- [x] TreeView with book structure
     
 ### Version 0.0.2
 - [ ] Xml export of the text (saving the project)
