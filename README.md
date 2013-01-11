@@ -30,7 +30,7 @@ Please make sure you have all that installed before compiling Rune.
 
 # Roadmap
 
-### Version 0.0.x Series
+## Version 0.0.x Series
 
 ### Version 0.0.1
 - [x] Text view for editing
