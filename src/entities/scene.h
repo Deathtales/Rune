@@ -57,10 +57,14 @@ class Scene: public Section
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
 		Glib::ustring getBody();
 		void setBody(Glib::ustring content);
+		Glib::ustring getUri();
+		void setUri(Glib::ustring content);
 	protected:
 
 	private:
 		Glib::ustring body; /**< The body text of the scene*/
+		Glib::ustring uri;
+		void setBodyFromFile(Glib::RefPtr<Gio::File> file);
 };
 
 #endif // _SCENE_H_

@@ -74,8 +74,10 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	sec->set_attribute("progress",(Glib::ustring) progressString.str());
 	xmlpp::Element* desc = sec->add_child("description");
 	desc->add_child_text(this->description);
+	if(this->getType() == SCENE){
 	xmlpp::Element* uri = sec->add_child("uri");
 	uri->add_child_text(currentPath);
+	}
 	Section* next = toc;
 	while(next != NULL){
 		next->saveSectionXmlUnder(sec, currentPath);

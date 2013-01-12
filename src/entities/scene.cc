@@ -22,12 +22,19 @@
 Scene::Scene(Glib::ustring name,Glib::ustring desc) : Section(SCENE,name,desc){
 	this->is_opened = false;
 	this->body = "";
+	this->uri = "";
 }
 
 void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 	Section::saveSectionXmlUnder (root, parentPath);
 	Glib::RefPtr<Gio::File> dir = Gio::File::create_for_uri(parentPath);
 	Glib::RefPtr<Gio::File> sceneFile = dir->get_child(this->name + ".txt");
+	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
+		Glib::RefPtr<Gio::File> lastFile = Gio::File::create_for_uri(this->getUri());
+		if (this->getBody() == "" && lastFile->query_exists()){
+			this->setBodyFromFile(lastFile);
+		}
+	}
 	if(!dir->query_exists()){
 	dir->make_directory_with_parents ();
 	}
@@ -40,6 +47,18 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 		sceneStream = sceneFile->create_file();
 		sceneStream->write(this->getBody());
 	}
+	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
+		Glib::RefPtr<Gio::File> lastFile = Gio::File::create_for_uri(this->getUri());
+		try{
+		lastFile->remove();
+		lastFile->get_parent()->remove();
+		lastFile->get_parent()->get_parent()->remove();
+		lastFile->get_parent()->get_parent()->get_parent()->remove();
+		} catch(Glib::Error error){
+		}
+	}
+
+	this->setUri(sceneFile->get_uri());
 	
 }
 
@@ -47,6 +66,25 @@ Glib::ustring Scene::getBody(){
 	return body;
 }
 
-void Scene::setBody(Glib::ustring content){
-	this->body = content;
+void Scene::setBody(Glib::ustring path){
+	this->body = path;
+}
+
+void Scene::setBodyFromFile(Glib::RefPtr<Gio::File> file){
+	char *raw;
+	gsize read_bytes;
+	std::string e_tag;
+
+	file->load_contents(raw, read_bytes, e_tag);
+
+	Glib::ustring buffer = raw;
+	this->setBody(buffer);
+} 
+
+Glib::ustring Scene::getUri(){
+	return uri;
+}
+
+void Scene::setUri(Glib::ustring path){
+	this->uri = path;
 }
