@@ -41,6 +41,7 @@ protected:
 	void unrefSection(Gtk::TreeModel::Path path);
 private:
 	Project* currentProject;
+	bool enterTheCondition;
 };
 
 #endif // _PROJECT_MODEL_H_

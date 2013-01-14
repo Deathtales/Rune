@@ -32,6 +32,7 @@
 #include <glibmm/ustring.h>
 #include <libxml++/document.h>
 #include <giomm/file.h>
+#include <iostream>
 
 
 /**
@@ -110,7 +111,7 @@ class Section
 		 * \param[out] root : The parent xml element.
 		 */
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
-
+		void rename(bool exceptThis=false);
 
 
 	protected:
@@ -123,7 +124,9 @@ class Section
 		 * \param[in] type : the type to convert.
 		 */
 		Glib::ustring getStringType(int type);
-
+		bool nameIsAvailable(Glib::ustring name, bool exceptThis=false);
+		bool nameIsAvailableForward(Glib::ustring name);
+		bool nameIsAvailableBackwards(Glib::ustring name);
 };
 
 #endif // _ENTITY_H_

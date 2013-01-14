@@ -27,6 +27,7 @@ ProjectModel::ProjectModel(Project* cProject)
 	signal_row_deleted().connect(sigc::mem_fun(*this,
               &ProjectModel::catchRowDeleted));
 	currentProject = cProject;
+	enterTheCondition = true;
 }
 
 Glib::RefPtr<ProjectModel> ProjectModel::create(Project* cProject) 
@@ -104,20 +105,26 @@ void ProjectModel::catchRowDeleted(const Gtk::TreeModel::Path& path){
 }
 
 void ProjectModel::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iterator iter){
-	Section* sec = (*iter)[projectStructure.section];
+	Gtk::TreeModel::Row row = (*iter);
+	Section* sec = row[projectStructure.section];
 	Gtk::TreeModel::Path originalPath = path;
+	Section* parentSec;
+	Glib::ustring name;
+	std::ostringstream nameStream;
+	int index = 1;
 	if (sec != NULL){
 		if (path.prev()){
 			Section* prevSec = (*get_iter(path))[projectStructure.section];
 			sec->prevSection = prevSec;
 			prevSec->nextSection = sec;
+			
 		}
 		else{
 			sec->prevSection = NULL;
 			path = originalPath;
 			path.up();
 			if(!path.empty()){
-				Section* parentSec = (*get_iter(path))[projectStructure.section];
+				parentSec = (*get_iter(path))[projectStructure.section];
 				parentSec->toc = sec;
 			}
 			else{
@@ -133,8 +140,17 @@ void ProjectModel::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 		}
 		else
 			sec->nextSection = NULL;
+		sec->rename(true);
+		/* as inserting a row via drag n drop calls this twice, and one of
+		 the rows is causes a segmentation fault*/
+		enterTheCondition = !enterTheCondition;
+		if(enterTheCondition){
+		    row[projectStructure.name] = sec->name;
+		}
+		
 	}
 }
+
 
 void ProjectModel::unrefSection(Gtk::TreeModel::Path path){
 	Gtk::TreeModel::Path originalPath = path;

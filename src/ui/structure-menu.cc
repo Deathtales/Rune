@@ -129,19 +129,28 @@ void StructureMenu::createNewScene(){
 void StructureMenu::createNewResource(int type){
 	NewResourceDialog dial(type,NULL,currentProject->getAssociatedWindow());
 	int response = dial.run();
+	int index = 1;
+	Glib::ustring name = "";
+	std::ostringstream nameStream;
 	if(response == Gtk::RESPONSE_OK){
 		Section* sec;
-		if (type == SCENE)
-			sec = new Scene(dial.getName(),dial.getDescription());
-		else
-			sec = new Section(type,dial.getName(),dial.getDescription());
 		if (type == BOOK)
 			selected = currentProject;
+		if (dial.getName() == ""){
+			name = "untitled";
+		}
+		else{
+			name = dial.getName();
+		}
+		if (type == SCENE)
+			sec = new Scene(name,dial.getDescription());
+		else
+			sec = new Section(type,name,dial.getDescription());
 		selected->addSectionToToc(sec);
 		view->m_signal_section_updated.emit(type, sec);
 	}
 
-	
+
 }
 
 void StructureMenu::editResource(){
@@ -149,9 +158,19 @@ void StructureMenu::editResource(){
 	dial.setName(selected->name);
 	dial.setDescription(selected->description);
 	int response = dial.run();
+	Glib::ustring name;
+	std::ostringstream nameStream;
+	int index = 1;
 	if(response == Gtk::RESPONSE_OK){
+		if (dial.getName() == ""){
+			name = "untitled";
+		}
+		else{
+			name = dial.getName();
+		}
 		selected->name = dial.getName();
 		selected->description = dial.getDescription();
+		selected->rename(true);
 		view->m_signal_section_updated.emit(selected->getType(), selected);
 	}
 

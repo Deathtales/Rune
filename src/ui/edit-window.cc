@@ -106,9 +106,16 @@ Gtk::VBox* EditWindow::getWelcomeBox(){
 
 void EditWindow::createNewProject(){
 	NewResourceDialog dialog(PROJECT,NULL,this);
+	Glib::ustring name;
 	int response = dialog.run();
 	if(response == Gtk::RESPONSE_OK){
-		currentProject = new Project(dialog.getName(),dialog.getDescription(),this);
+		if (dialog.getName() == ""){
+			name = "untitled";
+		}
+		else{
+			name = dialog.getName();
+		}
+		currentProject = new Project(name,dialog.getDescription(),this);
 		set_title("Rune: " + currentProject->name);
 		std::vector<Gtk::Widget*> childrenVect= editVBox->get_children();
 		editVBox->remove((*childrenVect[1]));
