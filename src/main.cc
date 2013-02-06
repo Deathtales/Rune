@@ -18,7 +18,7 @@
  */
 #include <gtkmm/main.h>
 #include <iostream>
-#include "ui/edit-window.h"
+#include "ui/main-window.h"
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/stylecontext.h>
 #include <glibmm/refptr.h>
@@ -26,16 +26,21 @@
 #ifdef ENABLE_NLS
 #  include <libintl.h>
 #endif
-   
+
+/** \brief main function. 
+ * Initializes a new window and runs Rune
+ *
+ */
 int
 main (int argc, char *argv[])
 {
 	Gtk::Main app(argc, argv);
-	EditWindow editWin;
-	editWin.show_all();
-	Gtk::Main::run(editWin);
+	MainWindow mainWin;
+	mainWin.show_all();
+	Gtk::Main::run(mainWin);
 
 
-    return 0;
+	return 0;
 }
+
 
