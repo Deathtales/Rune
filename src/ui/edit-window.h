@@ -53,9 +53,9 @@ class EditWindow: public Gtk::Window
 public:
 	EditWindow();
 	~EditWindow();
-	Project* currentProject;
 
 protected:
+	Project* currentProject;
 	Gtk::VBox* editVBox;
 private:
 	bool tabOpened;

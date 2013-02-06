@@ -48,7 +48,7 @@ EditWindow::EditWindow(){
 	Gtk::Menu* fileMenu = Gtk::manage(new Gtk::Menu);
     menuItemFile->set_submenu(*fileMenu);
     
-    //Création d’un item de menu à partir d’un Stock Item et ajout au menu.
+    //Adding menu items
     Gtk::ImageMenuItem* newProjectItem = 
 		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::NEW));
 	newProjectItem->signal_activate().connect(sigc::mem_fun(*this, &EditWindow::createNewProject));
@@ -184,10 +184,6 @@ void EditWindow::switchToDarkMode(){
   ctx->add_provider_for_screen(screen, css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
-EditWindow::~EditWindow(){
-	if (currentProject != NULL)
-		delete currentProject;
-}
 
 Gtk::HPaned* EditWindow::getDoublePaned(bool newProject){
 	internalHPaned = Gtk::manage(new Gtk::HPaned);
@@ -307,3 +303,8 @@ void EditWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::T
 		scene->is_opened = false;
 	}
    }
+
+EditWindow::~EditWindow(){
+	if (currentProject != NULL)
+		delete currentProject;
+}

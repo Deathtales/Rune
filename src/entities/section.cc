@@ -34,18 +34,21 @@ int Section::getType()
 	return type;
 }
 
-void Section::rename(bool exceptThis){
+bool Section::rename(bool exceptThis){
 	Glib::ustring name;
 	std::ostringstream nameStream;
 	int index = 1;
+	bool res = false;
 	name = *(new Glib::ustring(this->name));
 	while(!nameIsAvailable(name,exceptThis)){
+		res = true;
 		nameStream << this->name << "_" << index;
 		name = (Glib::ustring) (nameStream.str());
 		nameStream.str("");
 		index++;
 	}
 	this->name = name;
+	return res;
 }
 
 void Section::addSection(Section* sec){
@@ -75,6 +78,7 @@ void Section::addSectionToToc(Section* sec){
 
 void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath){
 	xmlpp::Element* sec = root->add_child(getStringType(this->getType()));
+
 	Glib::ustring currentPath = 
 	Gio::File::create_for_uri(parentPath)->get_child(this->name)->get_uri();
 	sec->set_attribute("name", this->name);
@@ -122,7 +126,7 @@ bool Section::nameIsAvailableForward(Glib::ustring name){
 				return false;
 			}
 			else{
-				return nextSection->nameIsAvailableBackwards(name);
+				return nextSection->nameIsAvailableForward(name);
 			}
 	}
 }

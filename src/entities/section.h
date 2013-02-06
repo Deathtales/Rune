@@ -111,7 +111,7 @@ class Section
 		 * \param[out] root : The parent xml element.
 		 */
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
-		void rename(bool exceptThis=false);
+		bool rename(bool exceptThis=false);
 
 
 	protected:

@@ -141,7 +141,7 @@ bool StructureView::on_button_press_event(GdkEventButton* event){
 		}
 
 	}
-	
+
   return return_value;
 }
 

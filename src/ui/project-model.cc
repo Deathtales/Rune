@@ -141,13 +141,6 @@ void ProjectModel::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 		else
 			sec->nextSection = NULL;
 		sec->rename(true);
-		/* as inserting a row via drag n drop calls this twice, and one of
-		 the rows is causes a segmentation fault*/
-		enterTheCondition = !enterTheCondition;
-		if(enterTheCondition){
-		    row[projectStructure.name] = sec->name;
-		}
-		
 	}
 }
 
