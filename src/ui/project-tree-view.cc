@@ -17,50 +17,57 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "structure-view.h"
+#include "project-tree-view.h"
 
 
-StructureView::StructureView(Project* cProject){
+ProjectTreeView::ProjectTreeView(Project* cProject){
+
+	// initialize pixbufs for the icon next to the section name
 	bookbuf = Gdk::Pixbuf::create_from_file("images/book.svg", 20, 20, true);
 	partbuf = Gdk::Pixbuf::create_from_file("images/part.svg", 20, 20, true);
 	chapterbuf = Gdk::Pixbuf::create_from_file("images/chapter.svg", 20, 20, true);
 	scenebuf = Gdk::Pixbuf::create_from_file("images/scene.svg", 20, 20, true);
+
+	//initialise other specific properties
 	this->currentProject = cProject;
 	selected = currentProject;
-	
-	refStructure = ProjectModel::create(currentProject);
+
+	refStructure = ProjectStore::create(currentProject);
+
+	//define TreeView properties
 	set_reorderable ();
 	enable_model_drag_source();
 	enable_model_drag_dest();
 	set_has_tooltip ();
 
+	//Adds the structure of the actual content of our tree-view
 	Gtk::TreeView::Column* symbol = 
 		Gtk::manage(new Gtk::TreeView::Column);
 	symbol->pack_start(projectStructure.type,true);
 	symbol->pack_end(projectStructure.name,true);
 	append_column(*symbol);
 
-
+	//New cell renderer for displaying progressBar
 	Gtk::CellRendererProgress* cell = Gtk::manage(new Gtk::CellRendererProgress);
 	int cols_count = append_column("",*cell);
 	Gtk::TreeViewColumn* pColumn = get_column(cols_count - 1);
 	if(pColumn)
-  {
-    pColumn->add_attribute(cell->property_value(), projectStructure.progress);
-  }
+	{
+		pColumn->add_attribute(cell->property_value(), projectStructure.progress);
+	}
 
 	set_model(refStructure);
 	set_tooltip_column(4);
-	
+
 #ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
-  signal_button_press_event()
-    .connect(sigc::mem_fun(structureView, &StructureView::on_button_press_event), false);
+	signal_button_press_event()
+		.connect(sigc::mem_fun(this, &ProjectTreeView::on_button_press_event), false);
 #endif
 
 	show_all();
 }
 
-Glib::RefPtr<Gdk::Pixbuf> StructureView::getPixbuf(int type){
+Glib::RefPtr<Gdk::Pixbuf> ProjectTreeView::getPixbuf(int type){
 	Glib::ustring path = "";
 	switch (type){
 		case BOOK :
@@ -76,7 +83,7 @@ Glib::RefPtr<Gdk::Pixbuf> StructureView::getPixbuf(int type){
 	};
 }
 
-void StructureView::updateView(int type, Section* newSec){
+void ProjectTreeView::updateView(int type, Section* newSec){
 	Gtk::TreeModel::iterator iter;
 	Gtk::TreeModel::Row row0;
 	Gtk::TreeModel::Row row1;
@@ -84,42 +91,42 @@ void StructureView::updateView(int type, Section* newSec){
 	if (type == NONE){
 		refStructure->erase(selectedRowIter);
 		if (newSec->nextSection != NULL)
-		newSec->nextSection->prevSection = newSec->prevSection;
+			newSec->nextSection->prevSection = newSec->prevSection;
 		if (newSec->prevSection != NULL)	
-		newSec->prevSection->nextSection = newSec->nextSection;
+			newSec->prevSection->nextSection = newSec->nextSection;
 		selected = currentProject;
 	}
 	else{
-	if (type == BOOK && newSec != selected){
-		iter = refStructure->append();
-		row1 = *iter;
+		if (type == BOOK && newSec != selected){
+			iter = refStructure->append();
+			row1 = *iter;
+		}
+		else if (newSec == selected){
+			row1 = row0;
+			iter = selectedRowIter;
+		}
+		else{
+			iter = refStructure->append(row0.children());
+			row1 = *iter;
+		}
+		row1[projectStructure.name] = newSec->name;
+		row1[projectStructure.type] = getPixbuf(newSec->getType());
+		row1[projectStructure.progress] = newSec->progress;
+		row1[projectStructure.section] = newSec;
+		row1[projectStructure.description] = newSec->description;
+		Gtk::TreePath rowPath = refStructure->get_path(iter);
+		expand_to_path (rowPath);
 	}
-	else if (newSec == selected){
-		row1 = row0;
-		iter = selectedRowIter;
-	}
-	else{
-		iter = refStructure->append(row0.children());
-		row1 = *iter;
-	}
-	row1[projectStructure.name] = newSec->name;
-	row1[projectStructure.type] = getPixbuf(newSec->getType());
-	row1[projectStructure.progress] = newSec->progress;
-	row1[projectStructure.section] = newSec;
-	row1[projectStructure.description] = newSec->description;
-	Gtk::TreePath rowPath = refStructure->get_path(iter);
-	expand_to_path (rowPath);
-	}
-	
+
 }
 
 
-bool StructureView::on_button_press_event(GdkEventButton* event){
+bool ProjectTreeView::on_button_press_event(GdkEventButton* event){
 	bool return_value = false;
 
-  //Call base class, to allow normal handling,
-  //such as allowing the row to be selected by the right-click:
-  return_value = TreeView::on_button_press_event(event);
+	//Call base class, to allow normal handling,
+	//such as allowing the row to be selected by the right-click:
+	return_value = TreeView::on_button_press_event(event);
 
 
 	if( ((event->type == GDK_BUTTON_PRESS) || (event->type == GDK_2BUTTON_PRESS)) && 
@@ -142,21 +149,22 @@ bool StructureView::on_button_press_event(GdkEventButton* event){
 
 	}
 
-  return return_value;
+	return return_value;
 }
 
-StructureView::type_signal_section_updated StructureView::signal_section_updated()
+ProjectTreeView::type_signal_section_updated ProjectTreeView::signal_section_updated()
 {
-  return m_signal_section_updated;
+	return m_signal_section_updated;
 }
 
-StructureView::type_signal_waiting_menu StructureView::signal_waiting_menu ()
+ProjectTreeView::type_signal_waiting_menu ProjectTreeView::signal_waiting_menu ()
 {
-  return m_signal_waiting_menu;
+	return m_signal_waiting_menu;
 }
 
-StructureView::type_signal_section_open StructureView::signal_section_open()
+ProjectTreeView::type_signal_section_open ProjectTreeView::signal_section_open()
 {
-  return m_signal_section_open;
+	return m_signal_section_open;
 }
+
 
