@@ -19,32 +19,30 @@
 
 #include "project-model.h"
 
-ProjectModel::ProjectModel(Project* cProject)
+ProjectStore::ProjectStore(Project* cProject)
 {
 	set_column_types(projectStructure);
 	signal_row_changed().connect(sigc::mem_fun(*this,
-              &ProjectModel::catchRowInserted));
+              &ProjectStore::insertSection));
 	signal_row_deleted().connect(sigc::mem_fun(*this,
-              &ProjectModel::catchRowDeleted));
+              &ProjectStore::unrefSection));
 	currentProject = cProject;
-	enterTheCondition = true;
 }
 
-Glib::RefPtr<ProjectModel> ProjectModel::create(Project* cProject) 
+Glib::RefPtr<ProjectStore> ProjectStore::create(Project* cProject) 
 {
-	return Glib::RefPtr<ProjectModel> (new ProjectModel(cProject));
+	return Glib::RefPtr<ProjectStore> (new ProjectStore(cProject));
 }
 
 
 
-bool ProjectModel::row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, const Gtk::SelectionData& selection_data) const 
+bool ProjectStore::row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, const Gtk::SelectionData& selection_data) const 
 {
 	//Make the value of the "receives drags" column determine whether a row can be
 	//dragged into it:
-	//Glib::RefPtr<const Gtk::TreeModel> refThis = Glib::RefPtr<const Gtk::TreeModel>(this);
 	
 	Glib::RefPtr<Gtk::TreeModel> refThis =
-	Glib::RefPtr<Gtk::TreeModel>(const_cast<ProjectModel*>(this));
+	Glib::RefPtr<Gtk::TreeModel>(const_cast<ProjectStore*>(this));
 	refThis->reference();
 	Gtk::TreeModel::Path path_dragged_row;
 	Gtk::TreeModel::Path::get_from_selection_data(selection_data, refThis,
@@ -53,6 +51,7 @@ bool ProjectModel::row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, con
 	Gtk::TreeModel::Row dragged_row = *dragged_iter;
 	Section* dragged_section = dragged_row[projectStructure.section];
 	int dragged_type = dragged_section->getType();
+	
 	//dest is the path that the row would have after it has been dropped:
 	//But in this case we are more interested in the parent row:
 	Gtk::TreeModel::Path dest_parent = dest;
@@ -63,7 +62,7 @@ bool ProjectModel::row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, con
 	}
 	else
 	{
-		ProjectModel* unconstThis = const_cast<ProjectModel*>(this);
+		ProjectStore* unconstThis = const_cast<ProjectStore*>(this);
 		const_iterator iter_dest_parent = unconstThis->get_iter(dest_parent);
 		if(iter_dest_parent)
 		{
@@ -94,17 +93,12 @@ bool ProjectModel::row_drop_possible_vfunc(const Gtk::TreeModel::Path& dest, con
 	return Gtk::TreeStore::row_drop_possible_vfunc(dest, selection_data);
 }
 
-void ProjectModel::catchRowInserted(const Gtk::TreeModel::Path& path,const Gtk::TreeModel::iterator& iter){
+
+void ProjectStore::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iterator iter){
+	//does what treeStores usually does:
 	on_row_inserted(path, iter);
-	insertSection(path,iter);
-}
 
-void ProjectModel::catchRowDeleted(const Gtk::TreeModel::Path& path){
-	on_row_deleted(path);
-	unrefSection(path);
-}
-
-void ProjectModel::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iterator iter){
+	//Now takes care of the parallel Section ToC messing around. :D	
 	Gtk::TreeModel::Row row = (*iter);
 	Section* sec = row[projectStructure.section];
 	Gtk::TreeModel::Path originalPath = path;
@@ -145,7 +139,11 @@ void ProjectModel::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 }
 
 
-void ProjectModel::unrefSection(Gtk::TreeModel::Path path){
+void ProjectStore::unrefSection(Gtk::TreeModel::Path path){
+	//does what treeStores usually does:
+	on_row_deleted(path);
+
+	//Now takes care of the parallel Section ToC messing around. :D
 	Gtk::TreeModel::Path originalPath = path;
 	if (get_iter(path)){
 		Section* sec = (*get_iter(path))[projectStructure.section];
