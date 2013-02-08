@@ -35,11 +35,13 @@
 #include <gtkmm/paned.h>
 #include <gtkmm/menu.h>
 #include <gtkmm/menubar.h>
+#include <gtkmm/notebook.h>
 #include <gtkmm/separatormenuitem.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/button.h>
 #include <gtkmm/cssprovider.h>
+#include <gtkmm/filechooserdialog.h>
 
 #include "entities/project.h"
 #include "ui/new-resource-dialog.h"
@@ -74,6 +76,7 @@ class MainWindow: public Gtk::Window
 		Project* currentProject; /**< The currently edited project */
 		Gtk::VBox* mainVBox; /**< The main container in the main window */
 		Gtk::HPaned* editionHPaned; /**< The main container of the edit view*/
+		bool tabOpened; /**< Indicator to create a notebook.*/
 
 		
 		/** \brief convinience function
@@ -82,6 +85,18 @@ class MainWindow: public Gtk::Window
 		 * to Rune
 		 */
 		void createNewProject();
+
+		/** \brief saves a project
+		 * 
+		 * Saves a project according to its path.
+		 */
+		void saveProject();
+
+		/** \brief saves a project after asking for a path
+		 * 
+		 * Sets a new path to a project, then Saves it.
+		 */
+		void saveProjectAs();
 		
 		/** \brief convinience function
 		 * 
@@ -118,6 +133,22 @@ class MainWindow: public Gtk::Window
 		 */
 		Gtk::HPaned* getEditionPaned();
 
+		/** \brief Opens a tab.
+		 * 
+		 * Opens a new tab corresponding to a Scene.
+		 * \param[in] sec pointer to the section to open
+		 */
+		void openNewTab(Section* sec);
+
+		/** \brief Closes a tab.
+		 * 
+		 * Asks for confirmation before closing tab.
+		 * \param[in] sw the container
+		 * \param[in] nb the notebook
+		 * \param[in] tv specific textView
+		 * \param[in] scene the specific scene.
+		 */
+		void on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::TextView* tv, Scene* scene);
 		/** \brief Changes to light theme
 		 * 
 		 * Changes current theme for light one.
