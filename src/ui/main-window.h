@@ -43,6 +43,8 @@
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/filechooserdialog.h>
 
+#include <gtkspell/gtkspell.h>
+
 #include "entities/project.h"
 #include "ui/new-resource-dialog.h"
 #include "ui/project-tree-zone.h"
