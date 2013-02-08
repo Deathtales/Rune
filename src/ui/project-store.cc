@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "project-model.h"
+#include "project-store.h"
 
 ProjectStore::ProjectStore(Project* cProject)
 {
