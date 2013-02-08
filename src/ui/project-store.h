@@ -126,3 +126,5 @@ class ProjectStore: public Gtk::TreeStore
 	private:
 		Project* currentProject; /**< Current opened project */
 };
+
+#endif

@@ -29,7 +29,7 @@
 #include <gtkmm/tooltip.h>
 
 #include "entities/project.h"
-#include "ui/project-model.h"
+#include "ui/project-store.h"
 
 /** \class ProjectTreeView
  * \brief TreeView for showing ProjectStore
