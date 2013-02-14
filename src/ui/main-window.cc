@@ -216,8 +216,8 @@ Gtk::HPaned* MainWindow::getEditionPaned(){
 void MainWindow::openNewTab(Section* sec){
 	if (sec->getType() == SCENE){
 		Scene *scene = static_cast<Scene*>(sec);
-		Gtk::Notebook* notebook = Gtk::manage(new Gtk::Notebook);
 		if(!tabOpened){
+			notebook = Gtk::manage(new Gtk::Notebook);
 			editionHPaned->remove(*editionHPaned->get_child1());
 			editionHPaned->pack1(*notebook,true,false);
 			tabOpened = true;

@@ -78,6 +78,7 @@ class MainWindow: public Gtk::Window
 		Project* currentProject; /**< The currently edited project */
 		Gtk::VBox* mainVBox; /**< The main container in the main window */
 		Gtk::HPaned* editionHPaned; /**< The main container of the edit view*/
+		Gtk::Notebook* notebook; /**< The main notebook for edition view*/
 		bool tabOpened; /**< Indicator to create a notebook.*/
 
 		
