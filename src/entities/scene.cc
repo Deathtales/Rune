@@ -28,7 +28,7 @@ Scene::Scene(Glib::ustring name,Glib::ustring desc) : Section(SCENE,name,desc){
 void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 	Section::saveSectionXmlUnder (root, parentPath);
 	Glib::RefPtr<Gio::File> dir = Gio::File::create_for_uri(parentPath);
-	Glib::RefPtr<Gio::File> sceneFile = dir->get_child(this->name + ".txt");
+	Glib::RefPtr<Gio::File> sceneFile = dir->get_child(this->rename() + ".txt");
 	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
 		Glib::RefPtr<Gio::File> lastFile = Gio::File::create_for_uri(this->getUri());
 		if (this->getBody() == "" && lastFile->query_exists()){
@@ -36,7 +36,7 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 		}
 	}
 	if(!dir->query_exists()){
-	dir->make_directory_with_parents ();
+		dir->make_directory_with_parents ();
 	}
 	Glib::RefPtr<Gio::FileOutputStream> sceneStream;
 	if(sceneFile->query_exists() && this->getBody() != ""){
@@ -50,10 +50,10 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
 		Glib::RefPtr<Gio::File> lastFile = Gio::File::create_for_uri(this->getUri());
 		try{
-		lastFile->remove();
-		lastFile->get_parent()->remove();
-		lastFile->get_parent()->get_parent()->remove();
-		lastFile->get_parent()->get_parent()->get_parent()->remove();
+			lastFile->remove();
+			lastFile->get_parent()->remove();
+			lastFile->get_parent()->get_parent()->remove();
+			lastFile->get_parent()->get_parent()->get_parent()->remove();
 		} catch(Glib::Error error){
 		}
 	}

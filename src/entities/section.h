@@ -111,7 +111,7 @@ class Section
 		 * \param[out] root : The parent xml element.
 		 */
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
-		bool rename(bool exceptThis=false);
+		Glib::ustring rename();
 
 
 	protected:
@@ -124,7 +124,7 @@ class Section
 		 * \param[in] type : the type to convert.
 		 */
 		Glib::ustring getStringType(int type);
-		bool nameIsAvailable(Glib::ustring name, bool exceptThis=false);
+		bool nameIsAvailable(Glib::ustring name);
 		bool nameIsAvailableForward(Glib::ustring name);
 		bool nameIsAvailableBackwards(Glib::ustring name);
 };

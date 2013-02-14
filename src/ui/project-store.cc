@@ -134,7 +134,6 @@ void ProjectStore::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 		}
 		else
 			sec->nextSection = NULL;
-		sec->rename(true);
 	}
 }
 

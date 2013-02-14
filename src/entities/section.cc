@@ -34,21 +34,20 @@ int Section::getType()
 	return type;
 }
 
-bool Section::rename(bool exceptThis){
-	Glib::ustring name;
+Glib::ustring Section::rename(){
+	Glib::ustring newName;
 	std::ostringstream nameStream;
 	int index = 1;
 	bool res = false;
-	name = *(new Glib::ustring(this->name));
-	while(!nameIsAvailable(name,exceptThis)){
+	newName = *(new Glib::ustring(this->name));
+	while(!nameIsAvailableBackwards(newName)){
 		res = true;
 		nameStream << this->name << "_" << index;
-		name = (Glib::ustring) (nameStream.str());
+		newName = (Glib::ustring) (nameStream.str());
 		nameStream.str("");
 		index++;
 	}
-	this->name = name;
-	return res;
+	return newName;
 }
 
 void Section::addSection(Section* sec){
@@ -64,7 +63,6 @@ void Section::addSection(Section* sec){
 		prev->nextSection = sec;
 	}
 	sec->prevSection = prev;
-	sec->rename();
 
 }
 
@@ -80,7 +78,7 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	xmlpp::Element* sec = root->add_child(getStringType(this->getType()));
 
 	Glib::ustring currentPath = 
-	Gio::File::create_for_uri(parentPath)->get_child(this->name)->get_uri();
+	Gio::File::create_for_uri(parentPath)->get_child(this->rename())->get_uri();
 	sec->set_attribute("name", this->name);
 	xmlpp::Element* desc = sec->add_child("description");
 	desc->add_child_text(this->description);
@@ -118,35 +116,32 @@ Glib::ustring Section::getStringType(int type){
 	}
 }
 
-bool Section::nameIsAvailableForward(Glib::ustring name){
+bool Section::nameIsAvailableForward(Glib::ustring oName){
 		if(nextSection == NULL)
 			return true;
 		else{
-			if(nextSection->name == name){
+			if(nextSection->name == oName){
 				return false;
 			}
 			else{
-				return nextSection->nameIsAvailableForward(name);
+				return nextSection->nameIsAvailableForward(oName);
 			}
 	}
 }
-bool Section::nameIsAvailableBackwards(Glib::ustring name){
+bool Section::nameIsAvailableBackwards(Glib::ustring oName){
 		if(prevSection == NULL)
 			return true;
 		else{
-			if(prevSection->name == name){
+			if(prevSection->name == oName){
 				return false;
 			}
 			else{
-				return prevSection->nameIsAvailableBackwards(name);
+				return prevSection->nameIsAvailableBackwards(oName);
 			}
 	}
 }
 
-bool Section::nameIsAvailable(Glib::ustring name, bool exceptThis){
-	if(!exceptThis)
-	return (nameIsAvailableForward(name) && nameIsAvailableBackwards(name) && (this->name != name));
-	else
+bool Section::nameIsAvailable(Glib::ustring name){
 	return (nameIsAvailableForward(name) && nameIsAvailableBackwards(name));
 }
 
