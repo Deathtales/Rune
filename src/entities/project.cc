@@ -28,6 +28,35 @@ Project::Project(Glib::ustring title, Glib::ustring desc, Gtk::Window* parent)
 	this->associatedWindow = parent;
 }
 
+Project* Project::createFromRuneFile(Glib::ustring path, Gtk::Window* assocWin) 
+{
+	Glib::ustring name;
+	Glib::ustring desc;
+	xmlpp::DomParser parser;
+	Project* proj;
+	const xmlpp::Element* runeRoot;
+	try
+	{
+		parser.set_substitute_entities(false);
+		parser.parse_file(path);
+
+		if(parser)
+		{
+			//Walk the tree:
+			runeRoot = parser.get_document()->get_root_node();
+			proj = new Project("This will be changed","This too", assocWin);
+			proj->parseSectionFromXml((xmlpp::Node*) runeRoot);
+			proj->path = path;
+		}
+	}
+	catch(const std::exception& ex)
+	{
+		return NULL;
+	}
+	
+	return (proj);
+}
+
 Project::~Project(){
 
 }
@@ -46,8 +75,9 @@ void Project::save(){
 	Glib::RefPtr<Gio::File> runeFile = 
 		Gio::File::create_for_uri(this->getPath())->get_child(this->name + ".rune");
 	xmlDoc->write_to_file_formatted (runeFile->get_uri());
+	Glib::RefPtr<Gtk::RecentManager> recent_manager = Gtk::RecentManager::get_default();
+	recent_manager->add_item(runeFile->get_uri());
 }
-
 
 void Project::setPath(Glib::ustring uri){
 	this->path = uri;

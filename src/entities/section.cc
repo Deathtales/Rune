@@ -18,6 +18,7 @@
  */
 
 #include "entities/section.h"
+#include "entities/scene.h"
 
 Section::Section( int type, Glib::ustring name, Glib::ustring desc){
 	this->name = name;
@@ -93,6 +94,80 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	}
 }
 
+xmlpp::Node* Section::getNextSectionNode(xmlpp::Node* node){
+	xmlpp::Node* tmp = node;
+	while (tmp->get_next_sibling()){
+		tmp = tmp->get_next_sibling();
+		if (tmp->get_name() == "Book" || tmp->get_name() == "Part" || 
+		    tmp->get_name() == "Chapter" || tmp->get_name() == "Scene"){
+			return tmp;
+		}
+	}
+	return NULL;
+}
+
+xmlpp::Node* Section::getFirstChildNode(xmlpp::Node* node,Glib::ustring nodeName){
+	xmlpp::Node* tmp = node->get_first_child();
+
+	while(tmp && tmp->get_name() != nodeName){
+		tmp = tmp->get_next_sibling();
+	}
+		return tmp;
+	
+}
+
+Glib::ustring Section::getFirstChildNodeContent(xmlpp::Node* node,Glib::ustring name){
+	const xmlpp::TextNode* textNode = 
+		dynamic_cast<const xmlpp::TextNode*> (getFirstChildNode(node,name)->get_first_child());
+	if(textNode){
+		return textNode->get_content();
+	}
+	else return "";
+}
+
+Glib::ustring Section::getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib){
+	const xmlpp::Element* elem = 
+		dynamic_cast<const xmlpp::Element*> (node);
+	if(elem){
+		return elem->get_attribute_value(attrib);
+	}
+	else return "";
+}
+
+void Section::parseSectionFromXml(xmlpp::Node* node){
+	xmlpp::Node* tmp;
+	Section* tocItem = NULL;
+	Section* nextItem = NULL;
+	Glib::ustring secName = getAttributeFrom(node, "name");
+	Glib::ustring secDesc = getFirstChildNodeContent(node, "description");
+	this->name = secName;
+	this->description = secDesc;
+	this->type = getIntType(node->get_name());
+	tmp = getNextSectionNode(node->get_first_child());
+	while(tmp){
+		if (tmp->get_name() == "Scene"){
+			tocItem = new Scene("This will Change", "This too");
+		}
+		else{
+			tocItem = new Section(BOOK,"This will change", "this too");
+		}
+		tocItem->parseSectionFromXml(tmp);
+		this->addSectionToToc(tocItem);
+		tmp = getNextSectionNode(tmp);
+	}
+	tmp = getNextSectionNode(node);
+	if(tmp){
+		if (tmp->get_name() == "Scene"){
+			nextItem = new Scene("This will Change", "This too");
+		}
+		else{
+			nextItem = new Section(BOOK,"This will change", "this too");
+		}
+		nextItem->parseSectionFromXml(tmp);
+		this->addSection(nextItem);
+	}
+}
+
 Glib::ustring Section::getStringType(int type){
 	switch(type){
 		case PROJECT:
@@ -112,6 +187,29 @@ Glib::ustring Section::getStringType(int type){
 			break;
 		default:
 			return "Scene";
+			break;
+	}
+}
+
+int Section::getIntType(Glib::ustring type){
+	switch(type[1]){
+		case 'r':
+			return PROJECT;
+			break;
+		case 'o':
+			return BOOK;
+			break;
+		case 'a':
+			return PART;
+			break;
+		case 'h':
+			return CHAPTER;
+			break;
+		case 'c':
+			return SCENE;
+			break;
+		default:
+			return SCENE;
 			break;
 	}
 }

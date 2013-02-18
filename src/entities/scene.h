@@ -55,6 +55,7 @@ class Scene: public Section
 		Scene(Glib::ustring name,Glib::ustring desc);
 
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
+		virtual void parseSectionFromXml(xmlpp::Node* node);
 		Glib::ustring getBody();
 		void setBody(Glib::ustring content);
 		Glib::ustring getUri();

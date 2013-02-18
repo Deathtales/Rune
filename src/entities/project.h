@@ -21,8 +21,11 @@
 #define _PROJECT_H_
 #include <glibmm/ustring.h>
 #include "entities/section.h"
+#include "entities/scene.h"
 #include <gtkmm/window.h>
 #include <libxml++/document.h>
+#include <libxml++/parsers/domparser.h>
+#include <gtkmm/recentmanager.h>
 
 class Project : public Section
 {
@@ -33,11 +36,13 @@ public:
 	Gtk::Window* getAssociatedWindow();
 	void save();
 	void setPath(Glib::ustring uri);
+	static Project* createFromRuneFile(Glib::ustring path, Gtk::Window* assocWin);
 protected:
 
 private:
 	Glib::ustring path;
 	Gtk::Window* associatedWindow;
+
 };
 
 #endif // _PROJECT_H_

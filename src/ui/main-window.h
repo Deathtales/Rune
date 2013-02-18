@@ -100,6 +100,14 @@ class MainWindow: public Gtk::Window
 		 * Sets a new path to a project, then Saves it.
 		 */
 		void saveProjectAs();
+
+
+		/** \brief opens a project
+		 * 
+		 * Opens a file selector to open a project then opens the selected file.
+		 */
+		void openProject();
+
 		
 		/** \brief convinience function
 		 * 

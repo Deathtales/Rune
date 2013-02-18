@@ -111,11 +111,16 @@ class Section
 		 * \param[out] root : The parent xml element.
 		 */
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
+		virtual void parseSectionFromXml(xmlpp::Node* node);
 		Glib::ustring rename();
 
 
 	protected:
-
+		Glib::ustring getContentFromXmlNode(xmlpp::Node* node);
+		xmlpp::Node* getNextSectionNode(xmlpp::Node* node);
+		xmlpp::Node* getFirstChildNode(xmlpp::Node* node, Glib::ustring name);
+		Glib::ustring getFirstChildNodeContent(xmlpp::Node* node, Glib::ustring name);
+		Glib::ustring getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib);
 	private:
 		int type; /**< An int representing fonction type, according to SectionType.*/
 
@@ -124,10 +129,14 @@ class Section
 		 * \param[in] type : the type to convert.
 		 */
 		Glib::ustring getStringType(int type);
+		int getIntType(Glib::ustring type);
 		bool nameIsAvailable(Glib::ustring name);
 		bool nameIsAvailableForward(Glib::ustring name);
 		bool nameIsAvailableBackwards(Glib::ustring name);
+
 };
+
+class Scene;
 
 #endif // _ENTITY_H_
 

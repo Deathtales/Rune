@@ -76,7 +76,7 @@ void MainWindow::saveProject(){
 void MainWindow::saveProjectAs(){
 	if(currentProject != NULL){
 		Gtk::FileChooserDialog dial(*currentProject->getAssociatedWindow(), 
-		                            "Sauvegarder " + currentProject->name + " dans quel dossier?", 
+		                            "In which folder do you want to save " + currentProject->name + "?", 
 		                            Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
 		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
@@ -86,8 +86,8 @@ void MainWindow::saveProjectAs(){
 			Glib::RefPtr<Gio::File> dir = dial.get_file()->get_child(currentProject->name);
 			if(dir->query_exists()){
 				Gtk::MessageDialog dial2(*currentProject->getAssociatedWindow (),
-				                         dir->get_path() + " contient déjà un dossier nommé " + currentProject->name + 
-				                         ".\nVeuillez en choisir un autre.", true,
+				                         dir->get_path() + " aready contains a folder named " + currentProject->name + 
+				                         ".\nPlease choose another.", true,
 				                         Gtk::MESSAGE_WARNING,
 				                         Gtk::BUTTONS_OK, true);
 				dial2.run();
@@ -99,6 +99,24 @@ void MainWindow::saveProjectAs(){
 				saveProject();
 			}
 		}
+	}
+}
+
+void MainWindow::openProject(){
+	Gtk::FileChooserDialog dial(*this, 
+	                            "Open a .rune project :", 
+	                            Gtk::FILE_CHOOSER_ACTION_OPEN);
+	dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+	dial.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+	dial.set_select_multiple (false);
+	Glib::RefPtr<Gtk::FileFilter> runeFilter = Gtk::FileFilter::create();
+	runeFilter->add_pattern("*.rune");
+	runeFilter->set_name("Rune project");
+	dial.add_filter(runeFilter);
+	int response = dial.run();
+	if(response == Gtk::RESPONSE_OK){
+		Glib::RefPtr<Gio::File> runeFile = dial.get_file();
+		currentProject = Project::createFromRuneFile(runeFile->get_path(), this);
 	}
 }
 
@@ -141,6 +159,7 @@ Gtk::MenuBar* MainWindow::getMainMenuBar(){
 	Gtk::ImageMenuItem* openProjectItem = 
 		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::OPEN));
 	fileMenu->append(*openProjectItem);
+	openProjectItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::openProject));
 	Gtk::ImageMenuItem* saveProjectItem = 
 		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::SAVE));
 	saveProjectItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::saveProject));
