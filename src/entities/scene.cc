@@ -70,6 +70,16 @@ void Scene::openFromFile(){
 	}
 }
 
+void Scene::saveToFile(){
+	Glib::RefPtr<Gio::File> sceneFile = Gio::File::create_for_uri(getUri());
+
+	if(uri != "" && sceneFile->query_exists()){
+		Glib::RefPtr<Gio::FileOutputStream> sceneStream;
+		sceneStream = sceneFile->replace();
+		sceneStream->write(this->getBody());
+	}
+}
+
 void Scene::parseSectionFromXml(xmlpp::Node* node){
 	Section::parseSectionFromXml(node);
 	this->uri = getFirstChildNodeContent(node, "uri");

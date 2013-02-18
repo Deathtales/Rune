@@ -61,6 +61,7 @@ class Scene: public Section
 		Glib::ustring getUri();
 		void setUri(Glib::ustring content);
 		void openFromFile();
+		void saveToFile();
 	protected:
 
 	private:

@@ -306,27 +306,28 @@ void MainWindow::openNewTab(Section* sec){
 void MainWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::TextView* tv, Scene* scene){
 	if(scene->getBody().compare(tv->get_buffer()->get_text()) != 0){
 		Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
-			                        "Changes were made in " + scene->name + ".\nWhat do you want to do?", 
-			                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
+		                        "Changes were made in " + scene->name + ".\nWhat do you want to do?", 
+		                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
 		dial.add_button(Gtk::Stock::CLEAR, Gtk::RESPONSE_REJECT);
 		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
 		int response = dial.run();
 		if(response == Gtk::RESPONSE_OK){
-			    scene->setBody(tv->get_buffer()->get_text());
-				nb->remove_page(nb->page_num(*sw));
-				scene->is_opened = false;
-			}
-		if(response == Gtk::RESPONSE_REJECT){
-				nb->remove_page(nb->page_num(*sw));
-				scene->is_opened = false;
-			}
+			scene->setBody(tv->get_buffer()->get_text());
+			scene->saveToFile();
+			nb->remove_page(nb->page_num(*sw));
+			scene->is_opened = false;
 		}
+		if(response == Gtk::RESPONSE_REJECT){
+			nb->remove_page(nb->page_num(*sw));
+			scene->is_opened = false;
+		}
+	}
 	else{
 		nb->remove_page(nb->page_num(*sw));
 		scene->is_opened = false;
 	}
-   }
+}
 
 void MainWindow::switchToLightMode(){
 	//TODO : find another way for switching themes
