@@ -79,13 +79,13 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	xmlpp::Element* sec = root->add_child(getStringType(this->getType()));
 
 	Glib::ustring currentPath = 
-	Gio::File::create_for_uri(parentPath)->get_child(this->rename())->get_uri();
+		Gio::File::create_for_uri(parentPath)->get_child(this->rename())->get_uri();
 	sec->set_attribute("name", this->name);
 	xmlpp::Element* desc = sec->add_child("description");
 	desc->add_child_text(this->description);
 	if(this->getType() == SCENE){
-	xmlpp::Element* uri = sec->add_child("uri");
-	uri->add_child_text(currentPath + ".txt");
+		xmlpp::Element* uri = sec->add_child("uri");
+		uri->add_child_text(currentPath + ".txt");
 	}
 	Section* next = toc;
 	while(next != NULL){
@@ -144,16 +144,15 @@ void Section::parseSectionFromXml(xmlpp::Node* node){
 	this->description = secDesc;
 	this->type = getIntType(node->get_name());
 	tmp = getNextSectionNode(node->get_first_child());
-	while(tmp){
+	if(tmp){
 		if (tmp->get_name() == "Scene"){
 			tocItem = new Scene("This will Change", "This too");
 		}
 		else{
 			tocItem = new Section(BOOK,"This will change", "this too");
 		}
-		tocItem->parseSectionFromXml(tmp);
 		this->addSectionToToc(tocItem);
-		tmp = getNextSectionNode(tmp);
+		tocItem->parseSectionFromXml(tmp);
 	}
 	tmp = getNextSectionNode(node);
 	if(tmp){
