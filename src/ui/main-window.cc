@@ -117,7 +117,9 @@ void MainWindow::openProject(){
 	if(response == Gtk::RESPONSE_OK){
 		Glib::RefPtr<Gio::File> runeFile = dial.get_file();
 		currentProject = Project::createFromRuneFile(runeFile->get_path(), this);
+		this->setMainContent(this->getEditionPaned());
 	}
+
 }
 
 void MainWindow::setDefaultProperties(){
@@ -210,24 +212,23 @@ Gtk::VBox* MainWindow::getWelcomeBox(){
 }
 
 Gtk::HPaned* MainWindow::getEditionPaned(){
-	if (editionHPaned == NULL){
-		editionHPaned = Gtk::manage(new Gtk::HPaned);
-		Gtk::VPaned* structureVPaned = Gtk::manage(new Gtk::VPaned);
-		ProjectTreeZone* projectTreeZone =
-			Gtk::manage(new ProjectTreeZone(currentProject));
-		projectTreeZone->signal_section_open()
-			.connect(sigc::mem_fun(*this,&MainWindow::openNewTab));
-		structureVPaned->add1(*projectTreeZone);
-		structureVPaned->add2(*Gtk::manage
-		                      (new Gtk::Label("")));
-		structureVPaned->set_position(400);
+	editionHPaned = Gtk::manage(new Gtk::HPaned);
+	Gtk::VPaned* structureVPaned = Gtk::manage(new Gtk::VPaned);
+	ProjectTreeZone* projectTreeZone =
+		Gtk::manage(new ProjectTreeZone(currentProject));
+	projectTreeZone->signal_section_open()
+		.connect(sigc::mem_fun(*this,&MainWindow::openNewTab));
+	projectTreeZone->openView();
+	structureVPaned->add1(*projectTreeZone);
+	structureVPaned->add2(*Gtk::manage
+	                      (new Gtk::Label("")));
+	structureVPaned->set_position(400);
 
-		editionHPaned->pack1(*Gtk::manage(new Gtk::Label("Need some help from there? Go see the tutorial in the help menu.")),true,false);
-		editionHPaned->set_position(700);
-		editionHPaned->pack2(*structureVPaned,false,false);
-		show_all();
-
-	}
+	editionHPaned->pack1(*Gtk::manage(new Gtk::Label("Need some help from there? Go see the tutorial in the help menu.")),true,false);
+	editionHPaned->set_position(700);
+	editionHPaned->pack2(*structureVPaned,false,false);
+	show_all();
+	
 	return editionHPaned;
 
 }
@@ -265,6 +266,7 @@ void MainWindow::openNewTab(Section* sec){
 			sceneViewScrolled->set_policy(Gtk::POLICY_AUTOMATIC, 
 			                              Gtk::POLICY_AUTOMATIC);
 			Gtk::TextView* sceneView = Gtk::manage(new Gtk::TextView);
+			scene->openFromFile();
 			sceneView->get_buffer()->set_text (scene->getBody());
 			sceneView->set_editable();
 			sceneView->set_wrap_mode(Gtk::WRAP_WORD);

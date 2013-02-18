@@ -62,18 +62,25 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 	
 }
 
+void Scene::openFromFile(){
+	Glib::RefPtr<Gio::File> sceneFile = Gio::File::create_for_uri(getUri());
+
+	if(uri != "" && sceneFile->query_exists()){
+		setBodyFromFile(sceneFile);
+	}
+}
+
 void Scene::parseSectionFromXml(xmlpp::Node* node){
 	Section::parseSectionFromXml(node);
 	this->uri = getFirstChildNodeContent(node, "uri");
-	std::cout << "Uri: " << this->uri << std::endl << std::endl;
 }
 
 Glib::ustring Scene::getBody(){
 	return body;
 }
 
-void Scene::setBody(Glib::ustring path){
-	this->body = path;
+void Scene::setBody(Glib::ustring body){
+	this->body = body;
 }
 
 void Scene::setBodyFromFile(Glib::RefPtr<Gio::File> file){

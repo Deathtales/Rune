@@ -113,7 +113,7 @@ class Section
 		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
 		virtual void parseSectionFromXml(xmlpp::Node* node);
 		Glib::ustring rename();
-
+		void printTree(int indent=0);
 
 	protected:
 		Glib::ustring getContentFromXmlNode(xmlpp::Node* node);

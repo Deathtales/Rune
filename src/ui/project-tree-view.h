@@ -60,6 +60,8 @@ public:
 	 */
 	void updateView(int type, Section* newSec);
 
+	void openView(Section* newSec, Gtk::TreeModel::iterator iter=(*new Gtk::TreeIter()));
+
 	typedef sigc::signal<void,int, Section*> type_signal_section_updated;
 	type_signal_section_updated signal_section_updated();
 	type_signal_section_updated m_signal_section_updated;

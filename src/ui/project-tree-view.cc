@@ -120,6 +120,37 @@ void ProjectTreeView::updateView(int type, Section* newSec){
 
 }
 
+void ProjectTreeView::openView(Section* newSec, Gtk::TreeModel::iterator iter){
+	Gtk::TreeModel::Row row;
+	Gtk::TreeModel::iterator originIter = iter;
+	if (newSec->toc){
+		if (!iter && newSec->getType() == PROJECT){
+			iter = refStructure->append();
+		}
+		else{
+			iter = refStructure->append((*iter).children());
+		}
+		openView(newSec->toc,iter);
+		row = *iter;
+		row[projectStructure.name] = newSec->toc->name;
+		row[projectStructure.type] = getPixbuf(newSec->toc->getType());
+		row[projectStructure.progress] = newSec->toc->progress;
+		row[projectStructure.description] = newSec->toc->description;
+		row[projectStructure.section] = newSec->toc;
+
+	}
+	iter = originIter;
+	if (newSec->nextSection){
+		iter = refStructure->append((*(*iter).parent()).children());
+		openView(newSec->nextSection,iter);
+		row = *iter;
+		row[projectStructure.name] = newSec->nextSection->name;
+		row[projectStructure.type] = getPixbuf(newSec->nextSection->getType());
+		row[projectStructure.progress] = newSec->nextSection->progress;
+		row[projectStructure.section] = newSec->nextSection;
+		row[projectStructure.description] = newSec->nextSection->description;
+	}
+}
 
 bool ProjectTreeView::on_button_press_event(GdkEventButton* event){
 	bool return_value = false;

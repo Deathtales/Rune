@@ -158,6 +158,10 @@ Gtk::Menu* ProjectTreeZone::getProjectZoneMenu(int type){
 
 }
 
+void ProjectTreeZone::openView(){
+	projectTreeView->openView(currentProject);
+}
+
 void ProjectTreeZone::createNewResource(int type){
 	NewResourceDialog dial(type,currentProject->getAssociatedWindow());
 	int response = dial.run();

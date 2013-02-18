@@ -51,20 +51,28 @@ Glib::ustring Section::rename(){
 	return newName;
 }
 
+void Section::printTree(int indent){
+	int i;
+	for (i=0;i<indent;i++){
+		std::cout << "\t";
+	}
+	std::cout << "|___" << this->name << std::endl;
+	if(toc){
+		toc->printTree(indent + 1);
+	}
+	if(nextSection){
+		nextSection->printTree(indent);
+	}
+}
+
 void Section::addSection(Section* sec){
-
-	Section* next = this->nextSection;
-	Section* prev = NULL;
-
-	while (next != NULL){
-		prev = next;
-		next = next->nextSection;
+	if (nextSection == NULL){
+		nextSection = sec;
+		sec->prevSection = this;
 	}
-	if(prev != NULL){
-		prev->nextSection = sec;
+	else{
+		nextSection->addSection(sec);
 	}
-	sec->prevSection = prev;
-
 }
 
 void Section::addSectionToToc(Section* sec){
@@ -136,8 +144,8 @@ Glib::ustring Section::getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib){
 
 void Section::parseSectionFromXml(xmlpp::Node* node){
 	xmlpp::Node* tmp;
-	Section* tocItem = NULL;
-	Section* nextItem = NULL;
+	Section* tocItem;
+	Section* nextItem;
 	Glib::ustring secName = getAttributeFrom(node, "name");
 	Glib::ustring secDesc = getFirstChildNodeContent(node, "description");
 	this->name = secName;
@@ -151,8 +159,8 @@ void Section::parseSectionFromXml(xmlpp::Node* node){
 		else{
 			tocItem = new Section(BOOK,"This will change", "this too");
 		}
-		this->addSectionToToc(tocItem);
 		tocItem->parseSectionFromXml(tmp);
+		this->addSectionToToc(tocItem);
 	}
 	tmp = getNextSectionNode(node);
 	if(tmp){
@@ -165,9 +173,6 @@ void Section::parseSectionFromXml(xmlpp::Node* node){
 		nextItem->parseSectionFromXml(tmp);
 		this->addSection(nextItem);
 	}
-	std::cout << "Name: " << this->name << std::endl;
-	std::cout << "Type: " << getStringType(this->type) << std::endl;
-	std::cout << "Desc: " << this->description << std::endl << std::endl;
 }
 
 Glib::ustring Section::getStringType(int type){

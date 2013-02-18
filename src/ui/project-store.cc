@@ -109,8 +109,10 @@ void ProjectStore::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 	if (sec != NULL){
 		if (path.prev()){
 			Section* prevSec = (*get_iter(path))[projectStructure.section];
-			sec->prevSection = prevSec;
-			prevSec->nextSection = sec;
+			if(prevSec){
+				sec->prevSection = prevSec;
+				prevSec->nextSection = sec;
+			}
 			
 		}
 		else{
@@ -118,8 +120,10 @@ void ProjectStore::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 			path = originalPath;
 			path.up();
 			if(!path.empty()){
-				parentSec = (*get_iter(path))[projectStructure.section];
-				parentSec->toc = sec;
+				if(parentSec){
+					parentSec = (*get_iter(path))[projectStructure.section];
+					parentSec->toc = sec;
+				}
 			}
 			else{
 				currentProject->toc = sec;
@@ -129,8 +133,11 @@ void ProjectStore::insertSection(Gtk::TreeModel::Path path, Gtk::TreeModel::iter
 		path.next();
 		if (get_iter(path)){
 			Section* nextSec = (*get_iter(path))[projectStructure.section];
-			sec->nextSection = nextSec;
-			nextSec->prevSection = sec;
+			if(nextSec){
+				sec->nextSection = nextSec;
+				nextSec->prevSection = sec;
+			}
+			
 		}
 		else
 			sec->nextSection = NULL;

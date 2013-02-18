@@ -64,6 +64,7 @@ public:
 	 * \param[in] sec Section to open;
 	 */
 	void onSectionOpen(Section* sec);
+	void openView();
 
 	typedef sigc::signal<void,Section*> type_signal_section_open;
 	/**<New signal type to prevent the main window that a section must be opened*/
