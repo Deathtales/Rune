@@ -65,6 +65,7 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 void Scene::parseSectionFromXml(xmlpp::Node* node){
 	Section::parseSectionFromXml(node);
 	this->uri = getFirstChildNodeContent(node, "uri");
+	std::cout << "Uri: " << this->uri << std::endl << std::endl;
 }
 
 Glib::ustring Scene::getBody(){

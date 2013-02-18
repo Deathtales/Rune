@@ -85,7 +85,7 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	desc->add_child_text(this->description);
 	if(this->getType() == SCENE){
 	xmlpp::Element* uri = sec->add_child("uri");
-	uri->add_child_text(currentPath);
+	uri->add_child_text(currentPath + ".txt");
 	}
 	Section* next = toc;
 	while(next != NULL){
@@ -166,6 +166,9 @@ void Section::parseSectionFromXml(xmlpp::Node* node){
 		nextItem->parseSectionFromXml(tmp);
 		this->addSection(nextItem);
 	}
+	std::cout << "Name: " << this->name << std::endl;
+	std::cout << "Type: " << getStringType(this->type) << std::endl;
+	std::cout << "Desc: " << this->description << std::endl << std::endl;
 }
 
 Glib::ustring Section::getStringType(int type){
