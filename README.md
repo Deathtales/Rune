@@ -32,7 +32,7 @@ Please make sure you have all that installed before compiling Rune.
 # Install
 
 * Please make sure you have all the necessary dependencies installed on your system.
-* Download and exctract Rune tarball (branch Master is the most likely to work properly)
+* Download and exctract Rune tarball (or clone it; branch Master is the most likely to work properly)
 * Execute `./configure; make; make install` (The last has to be executed as root)
 * Now you can run `rune`.
 
