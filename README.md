@@ -39,10 +39,10 @@ Please make sure you have all that installed before compiling Rune.
 - [x] TreeView with book structure
     
 ### Version 0.0.2
-- [ ] Xml export of the text (saving the project)
-- [ ] Loading project
-- [ ] Documentation of code
-- [ ] English translation
+- [x] Xml export of the text (saving the project)
+- [x] Loading project
+- [x] Documentation of code
+- [x] English translation
 
 ### Version 0.0.3
 - [ ] Text export
