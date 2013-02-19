@@ -83,6 +83,8 @@ void MainWindow::saveProjectAs(){
 		//dial.set_uri(Glib::get_home_dir());
 		int response = dial.run();
 		if(response == Gtk::RESPONSE_OK){
+			for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
+				it->first->setBody(it->second->get_buffer()->get_text());
 			Glib::RefPtr<Gio::File> dir = dial.get_file()->get_child(currentProject->name);
 			if(dir->query_exists()){
 				Gtk::MessageDialog dial2(*currentProject->getAssociatedWindow (),
@@ -298,6 +300,7 @@ void MainWindow::openNewTab(Section* sec){
 			                                                notebook,
 					                                        sceneView, 
 					                                        scene));
+			tabMap[scene] = sceneView;
 			show_all();
 		}
 	}
@@ -317,15 +320,18 @@ void MainWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::T
 			scene->saveToFile();
 			nb->remove_page(nb->page_num(*sw));
 			scene->is_opened = false;
+			tabMap.erase(tabMap.find(scene));
 		}
 		if(response == Gtk::RESPONSE_REJECT){
 			nb->remove_page(nb->page_num(*sw));
 			scene->is_opened = false;
+			tabMap.erase(tabMap.find(scene));
 		}
 	}
 	else{
 		nb->remove_page(nb->page_num(*sw));
 		scene->is_opened = false;
+		tabMap.erase(tabMap.find(scene));
 	}
 }
 

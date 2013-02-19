@@ -45,6 +45,8 @@
 
 #include <gtkspell/gtkspell.h>
 
+#include <map>
+
 #include "entities/project.h"
 #include "ui/new-resource-dialog.h"
 #include "ui/project-tree-zone.h"
@@ -80,6 +82,7 @@ class MainWindow: public Gtk::Window
 		Gtk::HPaned* editionHPaned; /**< The main container of the edit view*/
 		Gtk::Notebook* notebook; /**< The main notebook for edition view*/
 		bool tabOpened; /**< Indicator to create a notebook.*/
+		std::map<Scene*,Gtk::TextView*> tabMap; /**< Map containing the list of open tabs indexed by their associated section*/
 
 		
 		/** \brief convinience function
