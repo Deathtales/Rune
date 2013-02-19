@@ -44,8 +44,10 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 		sceneStream->write(this->getBody());
 	}
 	else{
-		sceneStream = sceneFile->create_file();
-		sceneStream->write(this->getBody());
+		if(!sceneFile->query_exists()){
+			sceneStream = sceneFile->create_file();
+			sceneStream->write(this->getBody());
+		}
 	}
 	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
 		Glib::RefPtr<Gio::File> lastFile = Gio::File::create_for_uri(this->getUri());
@@ -72,7 +74,6 @@ void Scene::openFromFile(){
 
 void Scene::saveToFile(){
 	Glib::RefPtr<Gio::File> sceneFile = Gio::File::create_for_uri(getUri());
-
 	if(uri != "" && sceneFile->query_exists()){
 		Glib::RefPtr<Gio::FileOutputStream> sceneStream;
 		sceneStream = sceneFile->replace();

@@ -116,7 +116,7 @@ void MainWindow::openProject(){
 	int response = dial.run();
 	if(response == Gtk::RESPONSE_OK){
 		Glib::RefPtr<Gio::File> runeFile = dial.get_file();
-		currentProject = Project::createFromRuneFile(runeFile->get_path(), this);
+		currentProject = Project::createFromRuneFile(runeFile->get_parent()->get_uri(),runeFile->get_uri(), this);
 		this->setMainContent(this->getEditionPaned());
 	}
 

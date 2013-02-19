@@ -36,7 +36,7 @@ public:
 	Gtk::Window* getAssociatedWindow();
 	void save();
 	void setPath(Glib::ustring uri);
-	static Project* createFromRuneFile(Glib::ustring path, Gtk::Window* assocWin);
+	static Project* createFromRuneFile(Glib::ustring parentPath, Glib::ustring path, Gtk::Window* assocWin);
 protected:
 
 private:

@@ -28,7 +28,7 @@ Project::Project(Glib::ustring title, Glib::ustring desc, Gtk::Window* parent)
 	this->associatedWindow = parent;
 }
 
-Project* Project::createFromRuneFile(Glib::ustring path, Gtk::Window* assocWin) 
+Project* Project::createFromRuneFile(Glib::ustring parentPath, Glib::ustring path, Gtk::Window* assocWin) 
 {
 	Glib::ustring name;
 	Glib::ustring desc;
@@ -46,7 +46,7 @@ Project* Project::createFromRuneFile(Glib::ustring path, Gtk::Window* assocWin)
 			runeRoot = parser.get_document()->get_root_node();
 			proj = new Project("This will be changed","This too", assocWin);
 			proj->parseSectionFromXml((xmlpp::Node*) runeRoot);
-			proj->path = path;
+			proj->path = parentPath;
 		}
 	}
 	catch(const std::exception& ex)
