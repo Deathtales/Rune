@@ -6,8 +6,7 @@ A novel planner and editor for creative writers.
 
 # WARNING
 
-Rune is still under heavy development. So far, it is in its 0.0.1 version (see Roadmap). It means you **cannot save or load your project yet** Version 0.0.2 will  be available soon.
-For developpers: **This code is not documented yet**. You might want to wait a bit for version 0.1 before trying to read it.
+Rune is still under heavy development. So far, it is in its 0.0.2 version (see Roadmap). It means you **cannot export your project yet**, although you can save and open saved versions. Version 0.0.3 will  be available soon with text (markdown) and html export.
 
 Though feel free to submit a bug, or a patch anytime you wish.
 
