@@ -29,6 +29,13 @@ Rune depends on:
 
 Please make sure you have all that installed before compiling Rune.
 
+# Install
+
+* Please make sure you have all the necessary dependencies installed on your system.
+* Download and exctract Rune tarball (branch Master is the most likely to work properly)
+* Execute `./configure; make; make install`
+* Now you can run `rune`.
+
 # Roadmap
 
 ## Version 0.0.x Series
