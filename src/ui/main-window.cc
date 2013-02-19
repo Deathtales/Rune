@@ -63,34 +63,40 @@ void MainWindow::createNewProject(){
 }
 
 bool MainWindow::on_delete_event(GdkEventAny* event){
-	for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
-		if(it->first->getBody() != it->second->get_buffer()->get_text()){
-			currentProject->changesToProject = true;
-			break;
-		}
-	if(currentProject->changesToProject){
-		Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
-		                        "Changes were made in " + currentProject->name + ".\nDo you want to save before quitting?", 
-		                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
-		dial.add_button(Gtk::Stock::CLEAR, Gtk::RESPONSE_REJECT);
-		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-		dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
-		int response = dial.run();
-		if(response == Gtk::RESPONSE_REJECT){
-			return Gtk::Widget::on_delete_event(event);
-		}
-		if(response == Gtk::RESPONSE_OK){
-			saveProject();
-			return Gtk::Widget::on_delete_event(event);
+	if(currentProject){
+		for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
+			if(it->first->getBody() != it->second->get_buffer()->get_text()){
+				currentProject->changesToProject = true;
+				break;
+			}
+		if(currentProject->changesToProject){
+			Gtk::MessageDialog dial(*currentProject->getAssociatedWindow(), 
+			                        "Changes were made in " + currentProject->name + ".\nDo you want to save before quitting?", 
+			                        true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_NONE, true);
+			dial.add_button(Gtk::Stock::CLEAR, Gtk::RESPONSE_REJECT);
+			dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+			dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
+			int response = dial.run();
+			if(response == Gtk::RESPONSE_REJECT){
+				return Gtk::Widget::on_delete_event(event);
+			}
+			if(response == Gtk::RESPONSE_OK){
+				saveProject();
+				return Gtk::Widget::on_delete_event(event);
+			}
+			else{
+				return true;
+			}
 		}
 		else{
-			return false;
+			return Gtk::Widget::on_delete_event(event);
 		}
 	}
 	else{
 		return Gtk::Widget::on_delete_event(event);
 	}
 }
+
 void MainWindow::saveProject(){
 	if(currentProject != NULL){
 		if(currentProject->getPath() !=""){
