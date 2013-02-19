@@ -18,26 +18,22 @@ bin_PROGRAMS = rune
 
 rune_SOURCES = \
 	main.cc \
-	ui/edit-window.cc \
-	ui/edit-window.h \
 	entities/project.cc \
 	entities/project.h \
 	ui/new-resource-dialog.cc \
 	ui/new-resource-dialog.h \
-	ui/project-structure.cc \
-	ui/project-structure.h \
-	ui/structure-view.cc \
-	ui/structure-view.h \
 	entities/section.cc \
 	entities/section.h \
-	ui/structure-zone.cc \
-	ui/structure-zone.h \
-	ui/structure-menu.cc \
-	ui/structure-menu.h \
-	ui/project-model.cc \
-	ui/project-model.h \
 	entities/scene.cc \
-	entities/scene.h
+	entities/scene.h \
+	ui/main-window.cc \
+	ui/main-window.h \
+	ui/project-store.cc \
+	ui/project-store.h \
+	ui/project-tree-view.cc \
+	ui/project-tree-view.h \
+	ui/project-tree-zone.cc \
+	ui/project-tree-zone.h
 
 rune_LDFLAGS = 
 

@@ -1,5 +1,6 @@
-Rune
-====
+![Title](https://raw.github.com/tiesselune/Rune/development/images/Title.png)
+
+
 
 A novel planner and editor for creative writers.
 
@@ -31,39 +32,38 @@ Please make sure you have all that installed before compiling Rune.
 
 # Roadmap
 
-### Version 0.0.x Series
+## Version 0.0.x Series
 
 ### Version 0.0.1
-* Basic editing interface:
-    * Text view for editing
-    * TreeView with book structure
+- [x] Text view for editing
+- [x] TreeView with book structure
     
 ### Version 0.0.2
-* Xml export of the text (saving the project)
-* Loading project
-* Documentation of code
-* English translation
+- [ ] Xml export of the text (saving the project)
+- [ ] Loading project
+- [ ] Documentation of code
+- [ ] English translation
 
 ### Version 0.0.3
-* Text export
-* HTML export
+- [ ] Text export
+- [ ] HTML export
 
 ### Version 0.0.4
-* Checklist for scene in list-view
-* Advancement indicator
+- [ ] Checklist for scene in list-view
+- [ ] Advancement indicator
 
 ## Version 0.1 Series
 
 ### Version 0.1.0
-* Make the code clearer, documentation.
-* Bug Correction
-* HTML View in interface
+- [ ] Make the code clearer, documentation.
+- [ ] Bug Correction
+- [ ] HTML View in interface
 
 ### Version 0.1.1
-* Character management
+- [ ] Character management
 
 ### Version 0.1.2
-* Epub export
+- [ ] Epub export
 
 ### Version 0.1.3
-* Chronologic view 
+- [ ] Chronologic view 

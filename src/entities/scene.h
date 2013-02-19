@@ -17,23 +17,57 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file scene.h
+ * \brief Class Scene for real text in the book.
+ * \author Julien Sosthene
+ *
+ * Class of the only section that actually contains body text.
+ *
+ */
+
 #ifndef _SCENE_H_
 #define _SCENE_H_
 
 #include "entities/section.h"
 #include "glibmm/ustring.h"
 
+/** \class Scene
+ * \brief Class representing a text entity.
+ * 
+ * A scene is the child of a chapter.  It inherits everything from class 
+ * Section, but contains a body.
+ * 
+ */
 class Scene: public Section 
 {
-public:
-	Scene(Glib::ustring name,Glib::ustring desc);
-	Glib::ustring body;
-	bool is_opened;
+	public:
 
-protected:
 
-private:
+		bool is_opened; /**< Indicates if the scene is opened in a tab.*/
 
+		/** \brief Constructor
+		 * Initializes a new section of type SCENE.
+		 *
+		 * \param[in] name: Section's name.
+		 * \param[in] desc: A brief description of the contents (for tooltips).
+		 */
+		Scene(Glib::ustring name,Glib::ustring desc);
+
+		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
+		virtual void parseSectionFromXml(xmlpp::Node* node);
+		Glib::ustring getBody();
+		void setBody(Glib::ustring content);
+		Glib::ustring getUri();
+		void setUri(Glib::ustring content);
+		void openFromFile();
+		void saveToFile();
+	protected:
+
+	private:
+		Glib::ustring body; /**< The body text of the scene*/
+		Glib::ustring uri;
+		void setBodyFromFile(Glib::RefPtr<Gio::File> file);
 };
 
 #endif // _SCENE_H_

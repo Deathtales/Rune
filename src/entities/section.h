@@ -17,43 +17,126 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file section.h
+ * \brief Class Section representing a text entity in a book.
+ * \author Julien Sosthene
+ *
+ * Class Section representing a text entity in a book. Contains
+ * the enumeration for the different section types.
+ *
+ */
+
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 #include <glibmm/ustring.h>
+#include <libxml++/document.h>
+#include <giomm/file.h>
+#include <iostream>
 
+
+/**
+ * \enum SectionType
+ * \brief Type of a section.
+ * The different Section types, from the container to the contained.
+ * This gives a type to a section, since Book, Part and Chapter don't have
+ * specific children classes.
+ */
 enum SectionType{
-	PROJECT,
-	BOOK,
-	PART,
-	CHAPTER,
-	SCENE,
-	AKNOLEGEMENTS,
-	DEDICATION,
-	NONE
+	PROJECT, /**< Describes a Project. For casting to Project class. */
+	BOOK, /**< Describes a Book. */
+	PART, /**< Describes a Part in a book. */
+	CHAPTER, /**< Describes a Chapter in a Book or a Part. */
+	SCENE, /**< Describes a Scene in a Chapter. */
+	AKNOLEGEMENTS, /**< Describes aknoledgements - spectial Chapter. */
+	DEDICATION, /**< Describes dedications _ special Chapter. */
+	NONE /**< Describes an empty section: Section is not valid. */
 };
 
+
+/** \class Section
+ * \brief Class representing a text entity.
+ *
+ *  Class representing a text entity in a saga: project, book, part,
+ *  chapter or scene. Sections of type Project, Book, Part, Chapters can have
+ *  children listed in toc (table of contents), and any section works in a 
+ *  chained list represented by prevSection and nextSection.
+ */
 class Section
 {
-public:
-	Section(int type, Glib::ustring name, Glib::ustring desc);
-	~Section();
-	int getType();
-	Glib::ustring name;
-	Glib::ustring description;
-	Section* prevSection;
-	Section* nextSection;
-	Section* toc;
-	float progress;
-	bool modified;
-	void addSection(Section* sec);
-	void addSectionToToc(Section* sec);
+	public:
 
-protected:
+		Glib::ustring name; /**< Name of the section */
+		Glib::ustring description; /**< Brief description of the section */
+		Section* prevSection; /**< pointer to the Previous entry in the chained List */
+		Section* nextSection; /**< pointer to the next entry in the chained List */
+		Section* toc; /**< pointer to the child of the section.  */
+		float progress; /**< Progress for displaying in a Gtk::ProgressBar*/
 
-private:
-	int type;
+
+		/** \brief Constructor
+		 * Initializes a new section.
+		 *
+		 * \param[in] type: a section type (see SectionType enum)
+		 * \param[in] name: Section's name.
+		 * \param[in] desc: A brief description of the contents (for tooltips).
+		 */
+		Section(int type, Glib::ustring name, Glib::ustring desc);
+
+		/** \brief Destructor
+		 * Destroys a Section.
+		 */
+		~Section();
+
+		/** \brief Gets the type of section.
+		 * method meant to keep type private so that it won't change by mistake.
+		 * \return int representing the type of the section according to SectionType
+		 */
+		int getType();
+
+		/** \brief Adds a section to the end of the list.
+		 * Method that adds a section to the end of the list containing this section.
+		 * \param[in, out] sec : The section to add.
+			 */
+		void addSection(Section* sec);
+
+		/** \brief Adds a section to the end of the toc.
+		 * Method that adds a section to the end of table of contents (children).
+		 * \param[in, out] sec : The section to add.
+		 */
+		void addSectionToToc(Section* sec);
+		
+		/** \brief Saves the section in Xml doc
+		 * Method that adds a child (corresponding to the current section) to the given root.
+		 * \param[out] root : The parent xml element.
+		 */
+		virtual void saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath);
+		virtual void parseSectionFromXml(xmlpp::Node* node);
+		Glib::ustring rename();
+		void printTree(int indent=0);
+
+	protected:
+		Glib::ustring getContentFromXmlNode(xmlpp::Node* node);
+		xmlpp::Node* getNextSectionNode(xmlpp::Node* node);
+		xmlpp::Node* getFirstChildNode(xmlpp::Node* node, Glib::ustring name);
+		Glib::ustring getFirstChildNodeContent(xmlpp::Node* node, Glib::ustring name);
+		Glib::ustring getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib);
+	private:
+		int type; /**< An int representing fonction type, according to SectionType.*/
+
+		/** \brief Converts a int type to a string
+		 * Method that converts a SectionType to a string representing it.
+		 * \param[in] type : the type to convert.
+		 */
+		Glib::ustring getStringType(int type);
+		int getIntType(Glib::ustring type);
+		bool nameIsAvailable(Glib::ustring name);
+		bool nameIsAvailableForward(Glib::ustring name);
+		bool nameIsAvailableBackwards(Glib::ustring name);
 
 };
+
+class Scene;
 
 #endif // _ENTITY_H_
 

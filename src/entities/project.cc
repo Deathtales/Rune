@@ -23,10 +23,71 @@
 
 
 Project::Project(Glib::ustring title, Glib::ustring desc, Gtk::Window* parent)
-	: Section::Section(PROJECT,title,desc){
+: Section::Section(PROJECT,title,desc){
 	this->path = "";
 	this->associatedWindow = parent;
+	this->changesToProject = true;
 }
 
+Project* Project::createFromRuneFile(Glib::ustring parentPath, Glib::ustring path, Gtk::Window* assocWin) 
+{
+	Glib::ustring name;
+	Glib::ustring desc;
+	xmlpp::DomParser parser;
+	Project* proj;
+	const xmlpp::Element* runeRoot;
+	try
+	{
+		parser.set_substitute_entities(false);
+		parser.parse_file(path);
 
+		if(parser)
+		{
+			//Walk the tree:
+			runeRoot = parser.get_document()->get_root_node();
+			proj = new Project("This will be changed","This too", assocWin);
+			proj->parseSectionFromXml((xmlpp::Node*) runeRoot);
+			proj->path = parentPath;
+			proj->changesToProject = false;
+		}
+	}
+	catch(const std::exception& ex)
+	{
+		return NULL;
+	}
+	
+	return (proj);
+}
 
+Project::~Project(){
+
+}
+
+void Project::save(){
+	xmlpp::Document* xmlDoc = new xmlpp::Document();
+	xmlpp::Element* root = xmlDoc->create_root_node("Project");
+	root->set_attribute("name", this->name);
+	xmlpp::Element* desc = root->add_child("description");
+	desc->add_child_text(this->description);
+	Section* next = toc;
+	while(next != NULL){
+		next->saveSectionXmlUnder(root, this->getPath());
+		next = next->nextSection;
+	}
+	Glib::RefPtr<Gio::File> runeFile = 
+		Gio::File::create_for_uri(this->getPath())->get_child(this->name + ".rune");
+	xmlDoc->write_to_file_formatted (runeFile->get_uri());
+	Glib::RefPtr<Gtk::RecentManager> recent_manager = Gtk::RecentManager::get_default();
+	recent_manager->add_item(runeFile->get_uri());
+}
+
+void Project::setPath(Glib::ustring uri){
+	this->path = uri;
+}
+Glib::ustring Project::getPath(){
+	return this->path;
+}
+
+Gtk::Window* Project::getAssociatedWindow(){
+	return associatedWindow;
+}

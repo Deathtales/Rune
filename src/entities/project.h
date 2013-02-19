@@ -21,18 +21,28 @@
 #define _PROJECT_H_
 #include <glibmm/ustring.h>
 #include "entities/section.h"
+#include "entities/scene.h"
 #include <gtkmm/window.h>
+#include <libxml++/document.h>
+#include <libxml++/parsers/domparser.h>
+#include <gtkmm/recentmanager.h>
 
 class Project : public Section
 {
 public:
 	Project(Glib::ustring name, Glib::ustring desc, Gtk::Window* parent);
-	Glib::ustring path;
-	Gtk::Window* associatedWindow;
-
+	~Project();
+	Glib::ustring getPath();
+	Gtk::Window* getAssociatedWindow();
+	void save();
+	void setPath(Glib::ustring uri);
+	static Project* createFromRuneFile(Glib::ustring parentPath, Glib::ustring path, Gtk::Window* assocWin);
+	bool changesToProject; /**< A boolean showing changes were made in the project tree*/
 protected:
 
 private:
+	Glib::ustring path;
+	Gtk::Window* associatedWindow;
 
 };
 

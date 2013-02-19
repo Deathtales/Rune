@@ -17,22 +17,25 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * \file new-resource-dialog.cc
+ * \brief Dialog for creating resources
+ * \author Julien Sosthène
+ *
+ * Methods for NewResourceDialog.
+ *
+ */
 #include "new-resource-dialog.h"
-
-
 NewResourceDialog::NewResourceDialog(int type,
-                                     Gtk::Widget* specificWidget,
                                      Gtk::Window* parent) :
-	Gtk::Dialog( (getSpecificString(type, NEWRESOURCE)), *parent, true),
-								dialogVBox(get_vbox()){
+Gtk::Dialog( getSpecificString(type,NEWRESOURCE), *parent, true),dialogVBox(get_vbox()){
 	Gtk::Image* typeImage = 
-		Gtk::manage(new Gtk::Image(Gdk::Pixbuf::create_from_file(
-		                             getSpecificString(type,IMAGEPATH),
-		                             100,100, true)));
-
+		Gtk::manage(new Gtk::Image(Gdk::Pixbuf::create_from_file
+		                           (getSpecificString(type,IMAGEPATH),
+		                            100,100, true)));
 	Gtk::HBox* nameHBox = Gtk::manage(new Gtk::HBox);
 	Gtk::HBox* typeHBox = Gtk::manage(new Gtk::HBox);
-	Gtk::Label* nameLabel = Gtk::manage(new Gtk::Label("Nom:"));
+	Gtk::Label* nameLabel = Gtk::manage(new Gtk::Label("Name:"));
 	nameEntry = Gtk::manage(new Gtk::Entry);
 	nameEntry->set_tooltip_text(getSpecificString(type, NAMEINFO));
 	nameHBox->pack_start(*typeImage, Gtk::PACK_SHRINK);
@@ -46,7 +49,7 @@ NewResourceDialog::NewResourceDialog(int type,
 	descEntry = Gtk::manage(new Gtk::TextView(descBuffer));
 	descEntry->set_editable();
 	descEntry->set_wrap_mode(Gtk::WRAP_WORD);
-    descEntry->set_tooltip_text(getSpecificString(type, DESCINFO));
+	descEntry->set_tooltip_text(getSpecificString(type, DESCINFO));
 	Gtk::ScrolledWindow* descScrolled = 
 		Gtk::manage(new Gtk::ScrolledWindow);
 	descScrolled->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
@@ -54,15 +57,11 @@ NewResourceDialog::NewResourceDialog(int type,
 	descVBox->pack_start(*descLabel, Gtk::PACK_SHRINK);
 	descVBox->pack_end(*descScrolled, Gtk::PACK_EXPAND_WIDGET);
 	dialogVBox->pack_start(*descVBox, Gtk::PACK_EXPAND_WIDGET);
-	if(specificWidget != NULL){
-		dialogVBox->pack_end(*specificWidget);
-	}
 	add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::ADD, Gtk::RESPONSE_OK);
-	
+	add_button(Gtk::Stock::ADD, Gtk::RESPONSE_OK);
+
 	set_size_request(600,400);
 	show_all();
-	
 }
 
 Glib::ustring NewResourceDialog::getName(){
@@ -81,38 +80,39 @@ void NewResourceDialog::setDescription(Glib::ustring desc){
 	descEntry->get_buffer()->set_text(desc);
 }
 
+
 Glib::ustring NewResourceDialog::getSpecificString(int type, int specString){
 
 	Glib::ustring spec[NUMBERITEMS];
 	switch (type){
 		case PROJECT:
-			spec[NEWRESOURCE] = "Nouveau Projet";
-			spec[NAMEINFO] = "Le nom de votre projet. Il servira également de titre à votre série.";
-			spec[DESCINFO] = "Courte description qui s'affichera dans une infobulle comme celle-ci.";
+			spec[NEWRESOURCE] = "New Project";
+			spec[NAMEINFO] = "Name of your project. Will also be the name of the saga";
+			spec[DESCINFO] = "Short description of this project. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/project.svg";
 			break;
 		case BOOK:
-			spec[NEWRESOURCE] = "Nouveau Livre";
-			spec[NAMEINFO] = "Le titre du nouveau livre.";
-			spec[DESCINFO] = "Courte description qui s'affichera dans une infobulle comme celle-ci.";
+			spec[NEWRESOURCE] = "New Book";
+			spec[NAMEINFO] = "Title of your book.";
+			spec[DESCINFO] = "Short synopsis of this book. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/book.svg";
 			break;
 		case PART:
-			spec[NEWRESOURCE] = "Nouvelle Partie";
-			spec[NAMEINFO] = "OPTIONNEL: Le titre de la nouvelle partie.";
-			spec[DESCINFO] = "Courte description qui s'affichera dans une infobulle comme celle-ci.";
+			spec[NEWRESOURCE] = "New Part";
+			spec[NAMEINFO] = "Title of this part";
+			spec[DESCINFO] = "Short synopsis of this part. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/part.svg";
 			break;
 		case CHAPTER:
-			spec[NEWRESOURCE] = "Nouveau Chapitre";
-			spec[NAMEINFO] = "OPTIONNEL: Le titre du nouveau chapitre.";
-			spec[DESCINFO] = "Courte description qui s'affichera dans une infobulle comme celle-ci.";
+			spec[NEWRESOURCE] = "New Chapter";
+			spec[NAMEINFO] = "Title of this chapter";
+			spec[DESCINFO] = "Short synopsis of this chapter. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/chapter.svg";
 			break;
 		case SCENE:
-			spec[NEWRESOURCE] = "Nouvelle Scène";
-			spec[NAMEINFO] = "OPTIONNEL: Le titre du nouveau chapitre.";
-			spec[DESCINFO] = "Courte description qui s'affichera dans une infobulle comme celle-ci.";
+			spec[NEWRESOURCE] = "New Scene";
+			spec[NAMEINFO] = "Title of this scene. Won't be displayed in output.'";
+			spec[DESCINFO] = "Short synopsis of this scene. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/scene.svg";
 			break;
 		default:

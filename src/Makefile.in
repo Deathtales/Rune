@@ -64,12 +64,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_rune_OBJECTS = main.$(OBJEXT) edit-window.$(OBJEXT) \
-	project.$(OBJEXT) new-resource-dialog.$(OBJEXT) \
-	project-structure.$(OBJEXT) structure-view.$(OBJEXT) \
-	section.$(OBJEXT) structure-zone.$(OBJEXT) \
-	structure-menu.$(OBJEXT) project-model.$(OBJEXT) \
-	scene.$(OBJEXT)
+am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
+	new-resource-dialog.$(OBJEXT) section.$(OBJEXT) \
+	scene.$(OBJEXT) main-window.$(OBJEXT) project-store.$(OBJEXT) \
+	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -324,26 +322,22 @@ AM_CFLAGS = \
 
 rune_SOURCES = \
 	main.cc \
-	ui/edit-window.cc \
-	ui/edit-window.h \
 	entities/project.cc \
 	entities/project.h \
 	ui/new-resource-dialog.cc \
 	ui/new-resource-dialog.h \
-	ui/project-structure.cc \
-	ui/project-structure.h \
-	ui/structure-view.cc \
-	ui/structure-view.h \
 	entities/section.cc \
 	entities/section.h \
-	ui/structure-zone.cc \
-	ui/structure-zone.h \
-	ui/structure-menu.cc \
-	ui/structure-menu.h \
-	ui/project-model.cc \
-	ui/project-model.h \
 	entities/scene.cc \
-	entities/scene.h
+	entities/scene.h \
+	ui/main-window.cc \
+	ui/main-window.h \
+	ui/project-store.cc \
+	ui/project-store.h \
+	ui/project-tree-view.cc \
+	ui/project-tree-view.h \
+	ui/project-tree-zone.cc \
+	ui/project-tree-zone.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -441,17 +435,15 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/edit-window.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main-window.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/new-resource-dialog.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-model.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-structure.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-store.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-tree-view.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-tree-zone.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scene.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/section.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/structure-menu.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/structure-view.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/structure-zone.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -473,20 +465,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-edit-window.o: ui/edit-window.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT edit-window.o -MD -MP -MF $(DEPDIR)/edit-window.Tpo -c -o edit-window.o `test -f 'ui/edit-window.cc' || echo '$(srcdir)/'`ui/edit-window.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/edit-window.Tpo $(DEPDIR)/edit-window.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/edit-window.cc' object='edit-window.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o edit-window.o `test -f 'ui/edit-window.cc' || echo '$(srcdir)/'`ui/edit-window.cc
-
-edit-window.obj: ui/edit-window.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT edit-window.obj -MD -MP -MF $(DEPDIR)/edit-window.Tpo -c -o edit-window.obj `if test -f 'ui/edit-window.cc'; then $(CYGPATH_W) 'ui/edit-window.cc'; else $(CYGPATH_W) '$(srcdir)/ui/edit-window.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/edit-window.Tpo $(DEPDIR)/edit-window.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/edit-window.cc' object='edit-window.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o edit-window.obj `if test -f 'ui/edit-window.cc'; then $(CYGPATH_W) 'ui/edit-window.cc'; else $(CYGPATH_W) '$(srcdir)/ui/edit-window.cc'; fi`
 
 project.o: entities/project.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project.o -MD -MP -MF $(DEPDIR)/project.Tpo -c -o project.o `test -f 'entities/project.cc' || echo '$(srcdir)/'`entities/project.cc
@@ -516,34 +494,6 @@ new-resource-dialog.obj: ui/new-resource-dialog.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o new-resource-dialog.obj `if test -f 'ui/new-resource-dialog.cc'; then $(CYGPATH_W) 'ui/new-resource-dialog.cc'; else $(CYGPATH_W) '$(srcdir)/ui/new-resource-dialog.cc'; fi`
 
-project-structure.o: ui/project-structure.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-structure.o -MD -MP -MF $(DEPDIR)/project-structure.Tpo -c -o project-structure.o `test -f 'ui/project-structure.cc' || echo '$(srcdir)/'`ui/project-structure.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-structure.Tpo $(DEPDIR)/project-structure.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-structure.cc' object='project-structure.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-structure.o `test -f 'ui/project-structure.cc' || echo '$(srcdir)/'`ui/project-structure.cc
-
-project-structure.obj: ui/project-structure.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-structure.obj -MD -MP -MF $(DEPDIR)/project-structure.Tpo -c -o project-structure.obj `if test -f 'ui/project-structure.cc'; then $(CYGPATH_W) 'ui/project-structure.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-structure.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-structure.Tpo $(DEPDIR)/project-structure.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-structure.cc' object='project-structure.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-structure.obj `if test -f 'ui/project-structure.cc'; then $(CYGPATH_W) 'ui/project-structure.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-structure.cc'; fi`
-
-structure-view.o: ui/structure-view.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-view.o -MD -MP -MF $(DEPDIR)/structure-view.Tpo -c -o structure-view.o `test -f 'ui/structure-view.cc' || echo '$(srcdir)/'`ui/structure-view.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-view.Tpo $(DEPDIR)/structure-view.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-view.cc' object='structure-view.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-view.o `test -f 'ui/structure-view.cc' || echo '$(srcdir)/'`ui/structure-view.cc
-
-structure-view.obj: ui/structure-view.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-view.obj -MD -MP -MF $(DEPDIR)/structure-view.Tpo -c -o structure-view.obj `if test -f 'ui/structure-view.cc'; then $(CYGPATH_W) 'ui/structure-view.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-view.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-view.Tpo $(DEPDIR)/structure-view.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-view.cc' object='structure-view.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-view.obj `if test -f 'ui/structure-view.cc'; then $(CYGPATH_W) 'ui/structure-view.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-view.cc'; fi`
-
 section.o: entities/section.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT section.o -MD -MP -MF $(DEPDIR)/section.Tpo -c -o section.o `test -f 'entities/section.cc' || echo '$(srcdir)/'`entities/section.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/section.Tpo $(DEPDIR)/section.Po
@@ -558,48 +508,6 @@ section.obj: entities/section.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o section.obj `if test -f 'entities/section.cc'; then $(CYGPATH_W) 'entities/section.cc'; else $(CYGPATH_W) '$(srcdir)/entities/section.cc'; fi`
 
-structure-zone.o: ui/structure-zone.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-zone.o -MD -MP -MF $(DEPDIR)/structure-zone.Tpo -c -o structure-zone.o `test -f 'ui/structure-zone.cc' || echo '$(srcdir)/'`ui/structure-zone.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-zone.Tpo $(DEPDIR)/structure-zone.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-zone.cc' object='structure-zone.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-zone.o `test -f 'ui/structure-zone.cc' || echo '$(srcdir)/'`ui/structure-zone.cc
-
-structure-zone.obj: ui/structure-zone.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-zone.obj -MD -MP -MF $(DEPDIR)/structure-zone.Tpo -c -o structure-zone.obj `if test -f 'ui/structure-zone.cc'; then $(CYGPATH_W) 'ui/structure-zone.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-zone.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-zone.Tpo $(DEPDIR)/structure-zone.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-zone.cc' object='structure-zone.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-zone.obj `if test -f 'ui/structure-zone.cc'; then $(CYGPATH_W) 'ui/structure-zone.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-zone.cc'; fi`
-
-structure-menu.o: ui/structure-menu.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-menu.o -MD -MP -MF $(DEPDIR)/structure-menu.Tpo -c -o structure-menu.o `test -f 'ui/structure-menu.cc' || echo '$(srcdir)/'`ui/structure-menu.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-menu.Tpo $(DEPDIR)/structure-menu.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-menu.cc' object='structure-menu.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-menu.o `test -f 'ui/structure-menu.cc' || echo '$(srcdir)/'`ui/structure-menu.cc
-
-structure-menu.obj: ui/structure-menu.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT structure-menu.obj -MD -MP -MF $(DEPDIR)/structure-menu.Tpo -c -o structure-menu.obj `if test -f 'ui/structure-menu.cc'; then $(CYGPATH_W) 'ui/structure-menu.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-menu.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/structure-menu.Tpo $(DEPDIR)/structure-menu.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/structure-menu.cc' object='structure-menu.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o structure-menu.obj `if test -f 'ui/structure-menu.cc'; then $(CYGPATH_W) 'ui/structure-menu.cc'; else $(CYGPATH_W) '$(srcdir)/ui/structure-menu.cc'; fi`
-
-project-model.o: ui/project-model.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-model.o -MD -MP -MF $(DEPDIR)/project-model.Tpo -c -o project-model.o `test -f 'ui/project-model.cc' || echo '$(srcdir)/'`ui/project-model.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-model.Tpo $(DEPDIR)/project-model.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-model.cc' object='project-model.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-model.o `test -f 'ui/project-model.cc' || echo '$(srcdir)/'`ui/project-model.cc
-
-project-model.obj: ui/project-model.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-model.obj -MD -MP -MF $(DEPDIR)/project-model.Tpo -c -o project-model.obj `if test -f 'ui/project-model.cc'; then $(CYGPATH_W) 'ui/project-model.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-model.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-model.Tpo $(DEPDIR)/project-model.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-model.cc' object='project-model.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-model.obj `if test -f 'ui/project-model.cc'; then $(CYGPATH_W) 'ui/project-model.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-model.cc'; fi`
-
 scene.o: entities/scene.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT scene.o -MD -MP -MF $(DEPDIR)/scene.Tpo -c -o scene.o `test -f 'entities/scene.cc' || echo '$(srcdir)/'`entities/scene.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/scene.Tpo $(DEPDIR)/scene.Po
@@ -613,6 +521,62 @@ scene.obj: entities/scene.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='entities/scene.cc' object='scene.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o scene.obj `if test -f 'entities/scene.cc'; then $(CYGPATH_W) 'entities/scene.cc'; else $(CYGPATH_W) '$(srcdir)/entities/scene.cc'; fi`
+
+main-window.o: ui/main-window.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-window.o -MD -MP -MF $(DEPDIR)/main-window.Tpo -c -o main-window.o `test -f 'ui/main-window.cc' || echo '$(srcdir)/'`ui/main-window.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/main-window.Tpo $(DEPDIR)/main-window.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/main-window.cc' object='main-window.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-window.o `test -f 'ui/main-window.cc' || echo '$(srcdir)/'`ui/main-window.cc
+
+main-window.obj: ui/main-window.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-window.obj -MD -MP -MF $(DEPDIR)/main-window.Tpo -c -o main-window.obj `if test -f 'ui/main-window.cc'; then $(CYGPATH_W) 'ui/main-window.cc'; else $(CYGPATH_W) '$(srcdir)/ui/main-window.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/main-window.Tpo $(DEPDIR)/main-window.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/main-window.cc' object='main-window.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-window.obj `if test -f 'ui/main-window.cc'; then $(CYGPATH_W) 'ui/main-window.cc'; else $(CYGPATH_W) '$(srcdir)/ui/main-window.cc'; fi`
+
+project-store.o: ui/project-store.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-store.o -MD -MP -MF $(DEPDIR)/project-store.Tpo -c -o project-store.o `test -f 'ui/project-store.cc' || echo '$(srcdir)/'`ui/project-store.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-store.Tpo $(DEPDIR)/project-store.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-store.cc' object='project-store.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-store.o `test -f 'ui/project-store.cc' || echo '$(srcdir)/'`ui/project-store.cc
+
+project-store.obj: ui/project-store.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-store.obj -MD -MP -MF $(DEPDIR)/project-store.Tpo -c -o project-store.obj `if test -f 'ui/project-store.cc'; then $(CYGPATH_W) 'ui/project-store.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-store.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-store.Tpo $(DEPDIR)/project-store.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-store.cc' object='project-store.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-store.obj `if test -f 'ui/project-store.cc'; then $(CYGPATH_W) 'ui/project-store.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-store.cc'; fi`
+
+project-tree-view.o: ui/project-tree-view.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-tree-view.o -MD -MP -MF $(DEPDIR)/project-tree-view.Tpo -c -o project-tree-view.o `test -f 'ui/project-tree-view.cc' || echo '$(srcdir)/'`ui/project-tree-view.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-tree-view.Tpo $(DEPDIR)/project-tree-view.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-tree-view.cc' object='project-tree-view.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-tree-view.o `test -f 'ui/project-tree-view.cc' || echo '$(srcdir)/'`ui/project-tree-view.cc
+
+project-tree-view.obj: ui/project-tree-view.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-tree-view.obj -MD -MP -MF $(DEPDIR)/project-tree-view.Tpo -c -o project-tree-view.obj `if test -f 'ui/project-tree-view.cc'; then $(CYGPATH_W) 'ui/project-tree-view.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-tree-view.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-tree-view.Tpo $(DEPDIR)/project-tree-view.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-tree-view.cc' object='project-tree-view.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-tree-view.obj `if test -f 'ui/project-tree-view.cc'; then $(CYGPATH_W) 'ui/project-tree-view.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-tree-view.cc'; fi`
+
+project-tree-zone.o: ui/project-tree-zone.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-tree-zone.o -MD -MP -MF $(DEPDIR)/project-tree-zone.Tpo -c -o project-tree-zone.o `test -f 'ui/project-tree-zone.cc' || echo '$(srcdir)/'`ui/project-tree-zone.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-tree-zone.Tpo $(DEPDIR)/project-tree-zone.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-tree-zone.cc' object='project-tree-zone.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-tree-zone.o `test -f 'ui/project-tree-zone.cc' || echo '$(srcdir)/'`ui/project-tree-zone.cc
+
+project-tree-zone.obj: ui/project-tree-zone.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT project-tree-zone.obj -MD -MP -MF $(DEPDIR)/project-tree-zone.Tpo -c -o project-tree-zone.obj `if test -f 'ui/project-tree-zone.cc'; then $(CYGPATH_W) 'ui/project-tree-zone.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-tree-zone.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/project-tree-zone.Tpo $(DEPDIR)/project-tree-zone.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-tree-zone.cc' object='project-tree-zone.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-tree-zone.obj `if test -f 'ui/project-tree-zone.cc'; then $(CYGPATH_W) 'ui/project-tree-zone.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-tree-zone.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
