@@ -65,6 +65,8 @@ void MainWindow::createNewProject(){
 void MainWindow::saveProject(){
 	if(currentProject != NULL){
 		if(currentProject->getPath() !=""){
+			for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
+				it->first->setBody(it->second->get_buffer()->get_text());
 			currentProject->save();
 		}
 		else{
@@ -83,8 +85,6 @@ void MainWindow::saveProjectAs(){
 		//dial.set_uri(Glib::get_home_dir());
 		int response = dial.run();
 		if(response == Gtk::RESPONSE_OK){
-			for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
-				it->first->setBody(it->second->get_buffer()->get_text());
 			Glib::RefPtr<Gio::File> dir = dial.get_file()->get_child(currentProject->name);
 			if(dir->query_exists()){
 				Gtk::MessageDialog dial2(*currentProject->getAssociatedWindow (),
