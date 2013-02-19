@@ -75,7 +75,12 @@ class MainWindow: public Gtk::Window
 		~MainWindow();
 
 	protected:
-
+		/** \brief Asks for saving before closing
+		 * 
+		 * If something was changed, asks if Rune should save before closing.
+		 * \return A boolean to see if it worked well.
+		 */
+		virtual bool on_delete_event(GdkEventAny* event);
 	private:
 		Project* currentProject; /**< The currently edited project */
 		Gtk::VBox* mainVBox; /**< The main container in the main window */
@@ -83,7 +88,6 @@ class MainWindow: public Gtk::Window
 		Gtk::Notebook* notebook; /**< The main notebook for edition view*/
 		bool tabOpened; /**< Indicator to create a notebook.*/
 		std::map<Scene*,Gtk::TextView*> tabMap; /**< Map containing the list of open tabs indexed by their associated section*/
-
 		
 		/** \brief convinience function
 		 * 

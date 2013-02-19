@@ -184,6 +184,7 @@ void ProjectTreeZone::createNewResource(int type){
 		selected->addSectionToToc(sec);
 		projectTreeView->signal_section_updated().emit(type, sec);
 	}
+	currentProject->changesToProject = true;
 
 
 }
@@ -206,7 +207,7 @@ void ProjectTreeZone::editResource(){
 		selected->description = dial.getDescription();
 		projectTreeView->m_signal_section_updated.emit(selected->getType(), selected);
 	}
-
+	currentProject->changesToProject = true;
 }
 
 void ProjectTreeZone::removeResource(){
@@ -219,7 +220,7 @@ void ProjectTreeZone::removeResource(){
 		getProjectZoneMenu (PROJECT);
 		selected = currentProject;
 	}
-
+	currentProject->changesToProject = true;
 
 }
 

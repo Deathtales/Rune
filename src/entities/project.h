@@ -37,6 +37,7 @@ public:
 	void save();
 	void setPath(Glib::ustring uri);
 	static Project* createFromRuneFile(Glib::ustring parentPath, Glib::ustring path, Gtk::Window* assocWin);
+	bool changesToProject; /**< A boolean showing changes were made in the project tree*/
 protected:
 
 private:
