@@ -26,7 +26,6 @@ Scene::Scene(Glib::ustring name,Glib::ustring desc) : Section(SCENE,name,desc){
 }
 
 void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
-	Section::saveSectionXmlUnder (root, parentPath);
 	Glib::RefPtr<Gio::File> dir = Gio::File::create_for_uri(parentPath);
 	Glib::RefPtr<Gio::File> sceneFile = dir->get_child(this->rename() + ".txt");
 	if(this->getUri() != "" && this->getUri() != sceneFile->get_uri()){
@@ -61,6 +60,7 @@ void Scene::saveSectionXmlUnder(xmlpp::Element* root, Glib::ustring parentPath){
 	}
 
 	this->setUri(sceneFile->get_uri());
+	Section::saveSectionXmlUnder (root, parentPath);
 	
 }
 
