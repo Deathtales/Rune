@@ -47,6 +47,7 @@
 enum SpecificStrings{
 	NEWRESOURCE,
 	NAMEINFO,
+	SHNAMEINFO,
 	DESCINFO,
 	IMAGEPATH,
 	
@@ -72,17 +73,29 @@ class NewResourceDialog: public Gtk::Dialog
 		 */
 		NewResourceDialog(int type, Gtk::Window* parent);
 
+		/** \brief Gets the short name of new resource
+		 * 
+		 * \return The string contained in the second entry
+		 */
+		Glib::ustring getShName();
+
 		/** \brief Gets the name of new resource
 		 * 
 		 * \return The string contained in the first entry
 		 */
 		Glib::ustring getName();
-
+		
 		/** \brief Gets the description of new resource
 		 * 
-		 * \return The string contained in the second entry
+		 * \return The string contained in the third entry
 		 */
 		Glib::ustring getDescription();
+
+		/** \brief Sets the short name of resource
+		 * 
+		 * \param[in] name the name to replace the former one.
+		 */
+		void setShName(Glib::ustring name);
 
 		/** \brief Sets the name of resource
 		 * 
@@ -100,6 +113,7 @@ class NewResourceDialog: public Gtk::Dialog
 	private:
 		Gtk::Box* dialogVBox ; /**<Gtk::VBox for creating the dialog*/
 		Gtk::Entry* nameEntry; /**<Gtk::Entry for typing the name of the resource*/
+		Gtk::Entry* shNameEntry; /**<Gtk::Entry for typing the short name of the resource*/
 		Gtk::TextView* descEntry; /**<Gtk::TextView for typing the description of the resource*/
 
 		/** \brief Gets a string specific to a resource

@@ -66,7 +66,8 @@ class Section
 {
 	public:
 
-		Glib::ustring name; /**< Name of the section */
+		Glib::ustring name; /**< Name of the section (for exportation)) */
+		Glib::ustring shortName; /**< Short name (for display in the treeview) */
 		Glib::ustring description; /**< Brief description of the section */
 		Section* prevSection; /**< pointer to the Previous entry in the chained List */
 		Section* nextSection; /**< pointer to the next entry in the chained List */
@@ -78,7 +79,7 @@ class Section
 		 * Initializes a new section.
 		 *
 		 * \param[in] type: a section type (see SectionType enum)
-		 * \param[in] name: Section's name.
+		 * \param[in] name: Section's name for export.
 		 * \param[in] desc: A brief description of the contents (for tooltips).
 		 */
 		Section(int type, Glib::ustring name, Glib::ustring desc);

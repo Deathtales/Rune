@@ -109,11 +109,11 @@ void ProjectTreeView::updateView(int type, Section* newSec){
 			iter = refStructure->append(row0.children());
 			row1 = *iter;
 		}
-		row1[projectStructure.name] = newSec->name;
+		row1[projectStructure.name] = newSec->shortName;
 		row1[projectStructure.type] = getPixbuf(newSec->getType());
 		row1[projectStructure.progress] = newSec->progress;
 		row1[projectStructure.section] = newSec;
-		row1[projectStructure.description] = newSec->description;
+		row1[projectStructure.description] = "[" + newSec->name + "]" + "\n" + newSec->description;
 		Gtk::TreePath rowPath = refStructure->get_path(iter);
 		expand_to_path (rowPath);
 	}
@@ -132,10 +132,10 @@ void ProjectTreeView::openView(Section* newSec, Gtk::TreeModel::iterator iter){
 		}
 		openView(newSec->toc,iter);
 		row = *iter;
-		row[projectStructure.name] = newSec->toc->name;
+		row[projectStructure.name] = newSec->toc->shortName;
 		row[projectStructure.type] = getPixbuf(newSec->toc->getType());
 		row[projectStructure.progress] = newSec->toc->progress;
-		row[projectStructure.description] = newSec->toc->description;
+		row[projectStructure.description] = "[" + newSec->toc->name + "]" + "\n" + newSec->toc->description;
 		row[projectStructure.section] = newSec->toc;
 
 	}

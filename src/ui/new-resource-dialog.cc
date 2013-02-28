@@ -34,15 +34,27 @@ Gtk::Dialog( getSpecificString(type,NEWRESOURCE), *parent, true),dialogVBox(get_
 		                           (getSpecificString(type,IMAGEPATH),
 		                            100,100, true)));
 	Gtk::HBox* nameHBox = Gtk::manage(new Gtk::HBox);
+	Gtk::HBox* shNameHBox = Gtk::manage(new Gtk::HBox);
+	Gtk::VBox* nameVBox = Gtk::manage(new Gtk::VBox);
 	Gtk::HBox* typeHBox = Gtk::manage(new Gtk::HBox);
-	Gtk::Label* nameLabel = Gtk::manage(new Gtk::Label("Name:"));
+	Gtk::Label* nameLabel = Gtk::manage(new Gtk::Label("Name (output): "));
+	Gtk::Label* shNameLabel = Gtk::manage(new Gtk::Label("Short Name (display): "));
 	nameEntry = Gtk::manage(new Gtk::Entry);
 	nameEntry->set_tooltip_text(getSpecificString(type, NAMEINFO));
-	nameHBox->pack_start(*typeImage, Gtk::PACK_SHRINK);
-
+	typeHBox->pack_start(*typeImage, Gtk::PACK_SHRINK);
 	nameHBox->pack_start(*nameLabel, Gtk::PACK_SHRINK);
 	nameHBox->pack_end(*nameEntry);
-	dialogVBox->pack_start(*nameHBox, Gtk::PACK_SHRINK);
+	nameVBox->pack_start(*nameHBox);
+	if(type != PROJECT){
+		Gtk::HBox* shNameHBox = Gtk::manage(new Gtk::HBox);
+		shNameEntry = Gtk::manage(new Gtk::Entry);
+		shNameEntry->set_tooltip_text(getSpecificString(type, SHNAMEINFO));
+		shNameHBox->pack_start(*shNameLabel, Gtk::PACK_SHRINK);
+		shNameHBox->pack_end(*shNameEntry);
+		nameVBox->pack_end(*shNameHBox);
+	}
+	typeHBox->pack_end(*nameVBox);
+	dialogVBox->pack_start(*typeHBox, Gtk::PACK_SHRINK);
 	Gtk::VBox* descVBox = Gtk::manage(new Gtk::VBox());
 	Gtk::Label* descLabel = Gtk::manage(new Gtk::Label("Description: "));
 	Glib::RefPtr<Gtk::TextBuffer> descBuffer = Gtk::TextBuffer::create();
@@ -73,12 +85,20 @@ Glib::ustring NewResourceDialog::getName(){
 	return nameEntry->get_text();
 }
 
+Glib::ustring NewResourceDialog::getShName(){
+	return shNameEntry->get_text();
+}
+
 Glib::ustring NewResourceDialog::getDescription(){
 	return descEntry->get_buffer()->get_text();
 }
 
 void NewResourceDialog::setName(Glib::ustring name){
 	nameEntry->set_text(name);
+}
+
+void NewResourceDialog::setShName(Glib::ustring name){
+	shNameEntry->set_text(name);
 }
 
 void NewResourceDialog::setDescription(Glib::ustring desc){
@@ -89,6 +109,7 @@ void NewResourceDialog::setDescription(Glib::ustring desc){
 Glib::ustring NewResourceDialog::getSpecificString(int type, int specString){
 
 	Glib::ustring spec[NUMBERITEMS];
+	spec[SHNAMEINFO] = "Short Name for this section. Only for convenient display in the project tree.";
 	switch (type){
 		case PROJECT:
 			spec[NEWRESOURCE] = "New Project";
@@ -98,7 +119,7 @@ Glib::ustring NewResourceDialog::getSpecificString(int type, int specString){
 			break;
 		case BOOK:
 			spec[NEWRESOURCE] = "New Book";
-			spec[NAMEINFO] = "Title of your book.";
+			spec[NAMEINFO] = "Title of your book.";			
 			spec[DESCINFO] = "Short synopsis of this book. Will be displayed as a tooltip.";
 			spec[IMAGEPATH] = "images/book.svg";
 			break;

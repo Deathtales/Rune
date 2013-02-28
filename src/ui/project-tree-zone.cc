@@ -181,6 +181,7 @@ void ProjectTreeZone::createNewResource(int type){
 			sec = new Scene(name,dial.getDescription());
 		else
 			sec = new Section(type,name,dial.getDescription());
+		sec->shortName = dial.getShName();
 		selected->addSectionToToc(sec);
 		projectTreeView->signal_section_updated().emit(type, sec);
 	}
@@ -192,6 +193,7 @@ void ProjectTreeZone::createNewResource(int type){
 void ProjectTreeZone::editResource(){
 	NewResourceDialog dial(selected->getType(),currentProject->getAssociatedWindow());
 	dial.setName(selected->name);
+	dial.setShName(selected->shortName);
 	dial.setDescription(selected->description);
 	int response = dial.run();
 	Glib::ustring name;
@@ -204,6 +206,7 @@ void ProjectTreeZone::editResource(){
 			name = dial.getName();
 		}
 		selected->name = dial.getName();
+		selected->shortName = dial.getShName();
 		selected->description = dial.getDescription();
 		projectTreeView->m_signal_section_updated.emit(selected->getType(), selected);
 	}

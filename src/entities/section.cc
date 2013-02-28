@@ -22,6 +22,7 @@
 
 Section::Section( int type, Glib::ustring name, Glib::ustring desc){
 	this->name = name;
+	this->shortName = "";
 	this->description = desc;
 	this->type = type;
 	this->nextSection = NULL;
@@ -89,6 +90,7 @@ void Section::saveSectionXmlUnder(xmlpp::Element* root,Glib::ustring parentPath)
 	Glib::ustring currentPath = 
 		Gio::File::create_for_uri(parentPath)->get_child(this->rename())->get_uri();
 	sec->set_attribute("name", this->name);
+	sec->set_attribute("shortName", this->shortName);
 	xmlpp::Element* desc = sec->add_child("description");
 	desc->add_child_text(this->description);
 	if(this->getType() == SCENE){
@@ -147,8 +149,10 @@ void Section::parseSectionFromXml(xmlpp::Node* node){
 	Section* tocItem;
 	Section* nextItem;
 	Glib::ustring secName = getAttributeFrom(node, "name");
+	Glib::ustring secShName = getAttributeFrom(node, "shortName");
 	Glib::ustring secDesc = getFirstChildNodeContent(node, "description");
 	this->name = secName;
+	this->shortName = secShName;
 	this->description = secDesc;
 	this->type = getIntType(node->get_name());
 	tmp = getNextSectionNode(node->get_first_child());
