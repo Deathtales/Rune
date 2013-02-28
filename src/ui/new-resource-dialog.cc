@@ -109,7 +109,7 @@ void NewResourceDialog::setDescription(Glib::ustring desc){
 Glib::ustring NewResourceDialog::getSpecificString(int type, int specString){
 
 	Glib::ustring spec[NUMBERITEMS];
-	spec[SHNAMEINFO] = "Short Name for this section. Only for convenient display in the project tree.";
+	spec[SHNAMEINFO] = "Short Name for this section. Only for convenient display in the project tree.\nThis should not exceed 10 characters.";
 	switch (type){
 		case PROJECT:
 			spec[NEWRESOURCE] = "New Project";
