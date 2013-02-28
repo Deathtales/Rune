@@ -49,10 +49,15 @@ Gtk::Dialog( getSpecificString(type,NEWRESOURCE), *parent, true),dialogVBox(get_
 	descEntry = Gtk::manage(new Gtk::TextView(descBuffer));
 	descEntry->set_editable();
 	descEntry->set_wrap_mode(Gtk::WRAP_WORD);
+	descEntry->set_justification(Gtk::JUSTIFY_FILL);
+	descEntry->set_left_margin(10);
+	descEntry->set_right_margin(10);
+	descEntry->set_indent(20);
+	descEntry->set_border_width(10);
 	descEntry->set_tooltip_text(getSpecificString(type, DESCINFO));
 	Gtk::ScrolledWindow* descScrolled = 
 		Gtk::manage(new Gtk::ScrolledWindow);
-	descScrolled->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+	descScrolled->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 	descScrolled->add(*descEntry);
 	descVBox->pack_start(*descLabel, Gtk::PACK_SHRINK);
 	descVBox->pack_end(*descScrolled, Gtk::PACK_EXPAND_WIDGET);

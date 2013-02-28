@@ -6,13 +6,14 @@ A novel planner and editor for creative writers.
 
 # WARNING
 
-Rune is still under heavy development. So far, it is in its 0.0.1 version (see Roadmap). It means you **cannot save or load your project yet** Version 0.0.2 will  be available soon.
-For developpers: **This code is not documented yet**. You might want to wait a bit for version 0.1 before trying to read it.
+Rune is still under heavy development. So far, it is in its 0.0.2 version (see Roadmap). It means you **cannot export your project yet**, although you can save and open saved versions. Version 0.0.3 will  be available soon with text (markdown) and html export.
+
+Though feel free to submit a bug, or a patch anytime you wish.
 
 # About
 
 ### Description
-Rune is a *tool for creative writers* meant to help them **plan** and **edit** their novels. 
+Rune is a GTK+ **tool for creative writers** meant to help them **plan** and **edit** their novels. 
 It lets you check your planning and advancement, your plot and characters while typing in a format-abstracted manner. Rune will export your manuscript in text, HTML or Epub format.
 
 ### Licence
@@ -28,6 +29,13 @@ Rune depends on:
 
 Please make sure you have all that installed before compiling Rune.
 
+# Install
+
+* Please make sure you have all the necessary dependencies installed on your system.
+* Download and exctract Rune tarball (or clone it; branch Master is the most likely to work properly)
+* Execute `./configure; make; make install` (The last has to be executed as root)
+* Now you can run `rune`.
+
 # Roadmap
 
 ## Version 0.0.x Series
@@ -37,10 +45,10 @@ Please make sure you have all that installed before compiling Rune.
 - [x] TreeView with book structure
     
 ### Version 0.0.2
-- [ ] Xml export of the text (saving the project)
-- [ ] Loading project
-- [ ] Documentation of code
-- [ ] English translation
+- [x] Xml export of the text (saving the project)
+- [x] Loading project
+- [x] Documentation of code
+- [x] English translation
 
 ### Version 0.0.3
 - [ ] Text export
