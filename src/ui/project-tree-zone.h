@@ -86,6 +86,8 @@ private:
 	Gtk::ImageMenuItem* remove; /**<MenuItem of the projectZoneMenu*/
 	Gtk::ImageMenuItem* edit; /**<MenuItem of the projectZoneMenu*/
 	Gtk::ImageMenuItem* open; /**<MenuItem of the projectZoneMenu*/
+	Gtk::ImageMenuItem* convert; /**<MenuItem of the projectZoneMenu*/
+	Gtk::ImageMenuItem* convertToMdwn; /**<MenuItem of the bookConvertMenu*/
 
 	/** \brief Creates of rearranges the projectZoneMenu
 	 * 
@@ -119,6 +121,12 @@ private:
 	 * Removes a resource both from display and Section ToC
 	 */
 	void removeResource();
+
+	/** \brief Exports a book
+	 * 
+	 * Exports a book to Markdown format;
+	 */
+	void convertResourceToMarkdown();
 
 	/** \brief Prepares the projectZoneMenu
 	 * 

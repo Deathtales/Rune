@@ -111,6 +111,17 @@ Gtk::Menu* ProjectTreeZone::getProjectZoneMenu(int type){
 		projectZoneMenu->append(*remove);
 		remove->signal_activate().connect( sigc::mem_fun(*this,
 		                                                 &ProjectTreeZone::removeResource));
+		convert = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::CONVERT));
+		projectZoneMenu->append(*convert);
+		Gtk::Menu* bookConvertMenu = Gtk::manage(new Gtk::Menu);
+		convertToMdwn = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::CONVERT));
+		convertToMdwn->set_label("Convert to Markdown...");
+		bookConvertMenu->append(*convertToMdwn);
+		convert->set_submenu(*bookConvertMenu);
+		bookConvertMenu->show_all();
+		convertToMdwn->signal_activate().connect( sigc::mem_fun(*this,
+		                                               &ProjectTreeZone::convertResourceToMarkdown));
+		
 	}
 
 	//Hide everything and only show relevant items
@@ -121,6 +132,7 @@ Gtk::Menu* ProjectTreeZone::getProjectZoneMenu(int type){
 	edit->hide();
 	remove->hide();
 	open->hide();
+	convert->hide();
 	switch (type){
 		case PROJECT :
 			newBook->show();
@@ -131,6 +143,7 @@ Gtk::Menu* ProjectTreeZone::getProjectZoneMenu(int type){
 			newChapter->show();
 			edit->show();
 			remove->show();
+			convert->show();
 			break;
 
 		case PART :
@@ -229,6 +242,10 @@ void ProjectTreeZone::removeResource(){
 
 void ProjectTreeZone::openSection(){
 	signal_section_open().emit(selected);
+}
+
+void ProjectTreeZone::convertResourceToMarkdown(){
+
 }
 
 void ProjectTreeZone::on_menu_waiting(Section* sec, GdkEventButton* event){
