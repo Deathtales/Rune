@@ -144,11 +144,11 @@ void ProjectTreeView::openView(Section* newSec, Gtk::TreeModel::iterator iter){
 		iter = refStructure->append((*(*iter).parent()).children());
 		openView(newSec->nextSection,iter);
 		row = *iter;
-		row[projectStructure.name] = newSec->nextSection->name;
+		row[projectStructure.name] = newSec->nextSection->shortName;
 		row[projectStructure.type] = getPixbuf(newSec->nextSection->getType());
 		row[projectStructure.progress] = newSec->nextSection->progress;
 		row[projectStructure.section] = newSec->nextSection;
-		row[projectStructure.description] = newSec->nextSection->description;
+		row[projectStructure.description] = "[" + newSec->nextSection->name + "]" + "\n" + newSec->nextSection->description;
 	}
 }
 
