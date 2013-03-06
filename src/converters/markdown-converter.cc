@@ -28,7 +28,6 @@ Glib::ustring MarkdownConverter::convert(Section* sec,ConvertOptions co){
 			case PROJECT:
 				nextBook = sec->toc;
 				while(nextBook){
-					co.bookNumber++;
 					buffer = buffer + convert(sec->toc,co);
 					nextBook = nextBook->nextSection;
 				}
@@ -37,6 +36,11 @@ Glib::ustring MarkdownConverter::convert(Section* sec,ConvertOptions co){
 				buffer = buffer + "#" + sec->name + "\n\n";
 				buffer = buffer + "#####" + co.author + "\n\n";
 				if(sec->nextSection || sec->prevSection){
+					Section* temp = sec;
+					while(temp->prevSection){
+						co.bookNumber++;
+						temp = sec->prevSection;
+					}
 					buffer = buffer + "######" + co.seriesName + " - " + intToUString(co.bookNumber) + "\n\n";
 				}
 				buffer = buffer + convert(sec->toc,co);

@@ -25,7 +25,7 @@
 class ConvertOptions
 {
 public:
-	ConvertOptions(Glib::ustring auth,bool includeShT,std::map<Glib::ustring,Glib::ustring> rT,Glib::ustring seriesName="",int bookNumber=0);
+	ConvertOptions(Glib::ustring auth,bool includeShT,std::map<Glib::ustring,Glib::ustring> rT,Glib::ustring seriesName="",int bookNumber=1);
 	Glib::ustring author;
 	bool includeShortTitle;
 	std::map<Glib::ustring,Glib::ustring> replacementTable;
