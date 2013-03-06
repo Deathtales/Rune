@@ -33,7 +33,13 @@ rune_SOURCES = \
 	ui/project-tree-view.cc \
 	ui/project-tree-view.h \
 	ui/project-tree-zone.cc \
-	ui/project-tree-zone.h
+	ui/project-tree-zone.h \
+	converters/book-converter.cc \
+	converters/book-converter.h \
+	converters/markdown-converter.cc \
+	converters/markdown-converter.h \
+	converters/convert-options.cc \
+	converters/convert-options.h
 
 rune_LDFLAGS = 
 

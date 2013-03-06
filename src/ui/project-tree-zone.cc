@@ -245,7 +245,12 @@ void ProjectTreeZone::openSection(){
 }
 
 void ProjectTreeZone::convertResourceToMarkdown(){
-
+	std::map<Glib::ustring,Glib::ustring> rt;
+	rt["--"] = "\xe2\x80\x94";
+	rt["\n"] = "\n\n";
+	ConvertOptions* co = new ConvertOptions("Julien SOSTHÈNE",true,rt,currentProject->name);
+	Glib::ustring result = MarkdownConverter::convert(selected,*co);
+	std::cout << result;
 }
 
 void ProjectTreeZone::on_menu_waiting(Section* sec, GdkEventButton* event){

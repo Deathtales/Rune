@@ -67,7 +67,9 @@ PROGRAMS = $(bin_PROGRAMS)
 am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
 	new-resource-dialog.$(OBJEXT) section.$(OBJEXT) \
 	scene.$(OBJEXT) main-window.$(OBJEXT) project-store.$(OBJEXT) \
-	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT)
+	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT) \
+	book-converter.$(OBJEXT) markdown-converter.$(OBJEXT) \
+	convert-options.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -337,7 +339,13 @@ rune_SOURCES = \
 	ui/project-tree-view.cc \
 	ui/project-tree-view.h \
 	ui/project-tree-zone.cc \
-	ui/project-tree-zone.h
+	ui/project-tree-zone.h \
+	converters/book-converter.cc \
+	converters/book-converter.h \
+	converters/markdown-converter.cc \
+	converters/markdown-converter.h \
+	converters/convert-options.cc \
+	converters/convert-options.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -435,8 +443,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/book-converter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/convert-options.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main-window.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown-converter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/new-resource-dialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-store.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-tree-view.Po@am__quote@
@@ -577,6 +588,48 @@ project-tree-zone.obj: ui/project-tree-zone.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/project-tree-zone.cc' object='project-tree-zone.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o project-tree-zone.obj `if test -f 'ui/project-tree-zone.cc'; then $(CYGPATH_W) 'ui/project-tree-zone.cc'; else $(CYGPATH_W) '$(srcdir)/ui/project-tree-zone.cc'; fi`
+
+book-converter.o: converters/book-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT book-converter.o -MD -MP -MF $(DEPDIR)/book-converter.Tpo -c -o book-converter.o `test -f 'converters/book-converter.cc' || echo '$(srcdir)/'`converters/book-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/book-converter.Tpo $(DEPDIR)/book-converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/book-converter.cc' object='book-converter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o book-converter.o `test -f 'converters/book-converter.cc' || echo '$(srcdir)/'`converters/book-converter.cc
+
+book-converter.obj: converters/book-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT book-converter.obj -MD -MP -MF $(DEPDIR)/book-converter.Tpo -c -o book-converter.obj `if test -f 'converters/book-converter.cc'; then $(CYGPATH_W) 'converters/book-converter.cc'; else $(CYGPATH_W) '$(srcdir)/converters/book-converter.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/book-converter.Tpo $(DEPDIR)/book-converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/book-converter.cc' object='book-converter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o book-converter.obj `if test -f 'converters/book-converter.cc'; then $(CYGPATH_W) 'converters/book-converter.cc'; else $(CYGPATH_W) '$(srcdir)/converters/book-converter.cc'; fi`
+
+markdown-converter.o: converters/markdown-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT markdown-converter.o -MD -MP -MF $(DEPDIR)/markdown-converter.Tpo -c -o markdown-converter.o `test -f 'converters/markdown-converter.cc' || echo '$(srcdir)/'`converters/markdown-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/markdown-converter.Tpo $(DEPDIR)/markdown-converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/markdown-converter.cc' object='markdown-converter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o markdown-converter.o `test -f 'converters/markdown-converter.cc' || echo '$(srcdir)/'`converters/markdown-converter.cc
+
+markdown-converter.obj: converters/markdown-converter.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT markdown-converter.obj -MD -MP -MF $(DEPDIR)/markdown-converter.Tpo -c -o markdown-converter.obj `if test -f 'converters/markdown-converter.cc'; then $(CYGPATH_W) 'converters/markdown-converter.cc'; else $(CYGPATH_W) '$(srcdir)/converters/markdown-converter.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/markdown-converter.Tpo $(DEPDIR)/markdown-converter.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/markdown-converter.cc' object='markdown-converter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o markdown-converter.obj `if test -f 'converters/markdown-converter.cc'; then $(CYGPATH_W) 'converters/markdown-converter.cc'; else $(CYGPATH_W) '$(srcdir)/converters/markdown-converter.cc'; fi`
+
+convert-options.o: converters/convert-options.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT convert-options.o -MD -MP -MF $(DEPDIR)/convert-options.Tpo -c -o convert-options.o `test -f 'converters/convert-options.cc' || echo '$(srcdir)/'`converters/convert-options.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/convert-options.Tpo $(DEPDIR)/convert-options.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/convert-options.cc' object='convert-options.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o convert-options.o `test -f 'converters/convert-options.cc' || echo '$(srcdir)/'`converters/convert-options.cc
+
+convert-options.obj: converters/convert-options.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT convert-options.obj -MD -MP -MF $(DEPDIR)/convert-options.Tpo -c -o convert-options.obj `if test -f 'converters/convert-options.cc'; then $(CYGPATH_W) 'converters/convert-options.cc'; else $(CYGPATH_W) '$(srcdir)/converters/convert-options.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/convert-options.Tpo $(DEPDIR)/convert-options.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/convert-options.cc' object='convert-options.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o convert-options.obj `if test -f 'converters/convert-options.cc'; then $(CYGPATH_W) 'converters/convert-options.cc'; else $(CYGPATH_W) '$(srcdir)/converters/convert-options.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

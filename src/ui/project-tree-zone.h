@@ -32,12 +32,14 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
 
+#include "converters/markdown-converter.h"
 #include "ui/project-tree-view.h"
 #include "entities/section.h"
 #include "entities/project.h"
 #include "entities/scene.h"
 #include "ui/new-resource-dialog.h"
 #include "project-store.h"
+#include "converters/book-converter.h"
 
 /** \class ProjectTreeZone
  * \brief Vbox containing menu and ProjectTreeView
