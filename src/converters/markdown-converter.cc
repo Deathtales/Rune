@@ -88,3 +88,15 @@ Glib::ustring MarkdownConverter::convert(Section* sec,ConvertOptions co){
 	}
 	return buffer;
 }
+
+void MarkdownConverter::convertToFile(Glib::ustring uri, Section* sec, ConvertOptions co){
+	Glib::RefPtr<Gio::File> markdownFile = Gio::File::create_for_uri(uri)->get_child(sec->name + ".mdwn");
+	Glib::RefPtr<Gio::FileOutputStream> markdownStream;
+	if(markdownFile->query_exists()){
+		markdownStream = markdownFile->replace();
+	}
+	else{
+		markdownStream = markdownFile->create_file();
+	}
+	markdownStream->write(convert(sec,co));
+}

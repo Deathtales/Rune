@@ -21,6 +21,7 @@
 #define _BOOK_CONVERTER_H_
 #include "entities/scene.h"
 #include "converters/convert-options.h"
+#include <giomm/file.h>
 #include <sstream>
 
 class BookConverter

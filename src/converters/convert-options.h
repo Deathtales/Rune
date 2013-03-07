@@ -31,7 +31,6 @@ public:
 	std::map<Glib::ustring,Glib::ustring> replacementTable;
 	int bookNumber;
 	Glib::ustring seriesName;
-
 protected:
 
 private:

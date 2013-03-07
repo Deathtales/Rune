@@ -26,6 +26,7 @@ class MarkdownConverter: public BookConverter
 {
 public:
 	static Glib::ustring convert(Section* sec, ConvertOptions co);
+	static void convertToFile(Glib::ustring uri, Section* sec, ConvertOptions co);
 protected:
 
 private:
