@@ -91,6 +91,8 @@ class MainWindow: public Gtk::Window
 		
 		void reinitialize ();
 
+		bool checkForChanges();
+		
 		/** \brief convinience function
 		 * 
 		 * Sets the default properties of a Gtk::Window to defaults specific

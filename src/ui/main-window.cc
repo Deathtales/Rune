@@ -52,26 +52,27 @@ void MainWindow::reinitialize(){
 }
 
 void MainWindow::createNewProject(){
-	NewResourceDialog dialog(PROJECT,this);
-	Glib::ustring name;
-	int response = dialog.run();
-	if(response == Gtk::RESPONSE_OK){
-		this->reinitialize ();
-		if (dialog.getName() == ""){
-			name = "untitled";
+	if(!checkForChanges()){
+		NewResourceDialog dialog(PROJECT,this);
+		Glib::ustring name;
+		int response = dialog.run();
+		if(response == Gtk::RESPONSE_OK){
+			this->reinitialize ();
+			if (dialog.getName() == ""){
+				name = "untitled";
+			}
+			else{
+				name = dialog.getName();
+			}
+			currentProject = new Project(name,dialog.getDescription(),this);
+			this->set_title(currentProject->name + " - Rune");
+			this->setMainContent(getEditionPaned());
 		}
-		else{
-			name = dialog.getName();
-		}
-		currentProject = new Project(name,dialog.getDescription(),this);
-		this->set_title(currentProject->name + " - Rune");
-		this->setMainContent(getEditionPaned());
 	}
-	
 }
 
-bool MainWindow::on_delete_event(GdkEventAny* event){
-	if(currentProject){
+bool MainWindow::checkForChanges(){
+		if(currentProject){
 		for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
 			if(it->first->getBody() != it->second->get_buffer()->get_text()){
 				currentProject->changesToProject = true;
@@ -86,27 +87,32 @@ bool MainWindow::on_delete_event(GdkEventAny* event){
 			dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
 			int response = dial.run();
 			if(response == Gtk::RESPONSE_REJECT){
-				this->reinitialize ();
-				return Gtk::Widget::on_delete_event(event);
+				return false;
 			}
 			if(response == Gtk::RESPONSE_OK){
 				saveProject();
-				this->reinitialize ();
-				return Gtk::Widget::on_delete_event(event);
+				return false;
 			}
 			else{
 				return true;
 			}
 		}
 		else{
-			this->reinitialize ();
-			return Gtk::Widget::on_delete_event(event);
+			return false;
 		}
 	}
 	else{
+		return false;
+	}
+}
+
+bool MainWindow::on_delete_event(GdkEventAny* event){
+	if (!checkForChanges()){
 		this->reinitialize ();
 		return Gtk::Widget::on_delete_event(event);
 	}
+	else 
+		return true;
 }
 
 void MainWindow::saveProject(){
@@ -152,25 +158,26 @@ void MainWindow::saveProjectAs(){
 }
 
 void MainWindow::openProject(){
-	Gtk::FileChooserDialog dial(*this, 
-	                            "Open a .rune project :", 
-	                            Gtk::FILE_CHOOSER_ACTION_OPEN);
-	dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-	dial.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
-	dial.set_select_multiple (false);
-	Glib::RefPtr<Gtk::FileFilter> runeFilter = Gtk::FileFilter::create();
-	runeFilter->add_pattern("*.rune");
-	runeFilter->set_name("Rune project");
-	dial.add_filter(runeFilter);
-	int response = dial.run();
-	if(response == Gtk::RESPONSE_OK){
-		this->reinitialize ();
-		Glib::RefPtr<Gio::File> runeFile = dial.get_file();
-		currentProject = Project::createFromRuneFile(runeFile->get_parent()->get_uri(),runeFile->get_uri(), this);
-		this->setMainContent(this->getEditionPaned());
-		this->set_title(currentProject->name + " - Rune");
+	if(!checkForChanges()){
+		Gtk::FileChooserDialog dial(*this, 
+		                            "Open a .rune project :", 
+		                            Gtk::FILE_CHOOSER_ACTION_OPEN);
+		dial.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+		dial.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
+		dial.set_select_multiple (false);
+		Glib::RefPtr<Gtk::FileFilter> runeFilter = Gtk::FileFilter::create();
+		runeFilter->add_pattern("*.rune");
+		runeFilter->set_name("Rune project");
+		dial.add_filter(runeFilter);
+		int response = dial.run();
+		if(response == Gtk::RESPONSE_OK){
+			this->reinitialize ();
+			Glib::RefPtr<Gio::File> runeFile = dial.get_file();
+			currentProject = Project::createFromRuneFile(runeFile->get_parent()->get_uri(),runeFile->get_uri(), this);
+			this->setMainContent(this->getEditionPaned());
+			this->set_title(currentProject->name + " - Rune");
+		}
 	}
-
 }
 
 void MainWindow::setDefaultProperties(){
