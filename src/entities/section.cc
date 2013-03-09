@@ -116,41 +116,14 @@ xmlpp::Node* Section::getNextSectionNode(xmlpp::Node* node){
 	return NULL;
 }
 
-xmlpp::Node* Section::getFirstChildNode(xmlpp::Node* node,Glib::ustring nodeName){
-	xmlpp::Node* tmp = node->get_first_child();
-
-	while(tmp && tmp->get_name() != nodeName){
-		tmp = tmp->get_next_sibling();
-	}
-		return tmp;
-	
-}
-
-Glib::ustring Section::getFirstChildNodeContent(xmlpp::Node* node,Glib::ustring name){
-	const xmlpp::TextNode* textNode = 
-		dynamic_cast<const xmlpp::TextNode*> (getFirstChildNode(node,name)->get_first_child());
-	if(textNode){
-		return textNode->get_content();
-	}
-	else return "";
-}
-
-Glib::ustring Section::getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib){
-	const xmlpp::Element* elem = 
-		dynamic_cast<const xmlpp::Element*> (node);
-	if(elem){
-		return elem->get_attribute_value(attrib);
-	}
-	else return "";
-}
 
 void Section::parseSectionFromXml(xmlpp::Node* node){
 	xmlpp::Node* tmp;
 	Section* tocItem;
 	Section* nextItem;
-	Glib::ustring secName = getAttributeFrom(node, "name");
-	Glib::ustring secShName = getAttributeFrom(node, "shortName");
-	Glib::ustring secDesc = getFirstChildNodeContent(node, "description");
+	Glib::ustring secName = XmlUtils::getAttributeFrom(node, "name");
+	Glib::ustring secShName = XmlUtils::getAttributeFrom(node, "shortName");
+	Glib::ustring secDesc = XmlUtils::getFirstChildNodeContent(node, "description");
 	this->name = secName;
 	this->shortName = secShName;
 	this->description = secDesc;

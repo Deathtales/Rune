@@ -39,7 +39,9 @@ rune_SOURCES = \
 	converters/markdown-converter.cc \
 	converters/markdown-converter.h \
 	converters/convert-options.cc \
-	converters/convert-options.h
+	converters/convert-options.h \
+	utils/xml-utils.cc \
+	utils/xml-utils.h
 
 rune_LDFLAGS = 
 

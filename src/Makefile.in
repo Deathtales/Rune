@@ -69,7 +69,7 @@ am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
 	scene.$(OBJEXT) main-window.$(OBJEXT) project-store.$(OBJEXT) \
 	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT) \
 	book-converter.$(OBJEXT) markdown-converter.$(OBJEXT) \
-	convert-options.$(OBJEXT)
+	convert-options.$(OBJEXT) xml-utils.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -345,7 +345,9 @@ rune_SOURCES = \
 	converters/markdown-converter.cc \
 	converters/markdown-converter.h \
 	converters/convert-options.cc \
-	converters/convert-options.h
+	converters/convert-options.h \
+	utils/xml-utils.cc \
+	utils/xml-utils.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -455,6 +457,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scene.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/section.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml-utils.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -630,6 +633,20 @@ convert-options.obj: converters/convert-options.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/convert-options.cc' object='convert-options.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o convert-options.obj `if test -f 'converters/convert-options.cc'; then $(CYGPATH_W) 'converters/convert-options.cc'; else $(CYGPATH_W) '$(srcdir)/converters/convert-options.cc'; fi`
+
+xml-utils.o: utils/xml-utils.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT xml-utils.o -MD -MP -MF $(DEPDIR)/xml-utils.Tpo -c -o xml-utils.o `test -f 'utils/xml-utils.cc' || echo '$(srcdir)/'`utils/xml-utils.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xml-utils.Tpo $(DEPDIR)/xml-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/xml-utils.cc' object='xml-utils.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o xml-utils.o `test -f 'utils/xml-utils.cc' || echo '$(srcdir)/'`utils/xml-utils.cc
+
+xml-utils.obj: utils/xml-utils.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT xml-utils.obj -MD -MP -MF $(DEPDIR)/xml-utils.Tpo -c -o xml-utils.obj `if test -f 'utils/xml-utils.cc'; then $(CYGPATH_W) 'utils/xml-utils.cc'; else $(CYGPATH_W) '$(srcdir)/utils/xml-utils.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xml-utils.Tpo $(DEPDIR)/xml-utils.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/xml-utils.cc' object='xml-utils.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o xml-utils.obj `if test -f 'utils/xml-utils.cc'; then $(CYGPATH_W) 'utils/xml-utils.cc'; else $(CYGPATH_W) '$(srcdir)/utils/xml-utils.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

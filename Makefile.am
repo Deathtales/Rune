@@ -33,7 +33,8 @@ data_DATA = images/Title.svg \
 	images/new-scene.svg \
 	images/part.svg \
 	images/project.svg \
-	images/scene.svg
+	images/scene.svg \
+	images/ReplacementTable.svg
 
 DISTCLEANFILES = intltool-extract \
 	intltool-merge \

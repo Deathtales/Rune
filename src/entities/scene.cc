@@ -83,7 +83,7 @@ void Scene::saveToFile(){
 
 void Scene::parseSectionFromXml(xmlpp::Node* node){
 	Section::parseSectionFromXml(node);
-	this->uri = getFirstChildNodeContent(node, "uri");
+	this->uri = XmlUtils::getFirstChildNodeContent(node, "uri");
 }
 
 Glib::ustring Scene::getBody(){

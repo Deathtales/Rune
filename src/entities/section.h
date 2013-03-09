@@ -33,7 +33,7 @@
 #include <libxml++/document.h>
 #include <giomm/file.h>
 #include <iostream>
-
+#include "utils/xml-utils.h"
 
 /**
  * \enum SectionType
@@ -117,11 +117,7 @@ class Section
 		void printTree(int indent=0);
 
 	protected:
-		Glib::ustring getContentFromXmlNode(xmlpp::Node* node);
 		xmlpp::Node* getNextSectionNode(xmlpp::Node* node);
-		xmlpp::Node* getFirstChildNode(xmlpp::Node* node, Glib::ustring name);
-		Glib::ustring getFirstChildNodeContent(xmlpp::Node* node, Glib::ustring name);
-		Glib::ustring getAttributeFrom(xmlpp::Node* node,Glib::ustring attrib);
 	private:
 		int type; /**< An int representing fonction type, according to SectionType.*/
 
