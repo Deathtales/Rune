@@ -89,6 +89,8 @@ class MainWindow: public Gtk::Window
 		bool tabOpened; /**< Indicator to create a notebook.*/
 		std::map<Scene*,Gtk::TextView*> tabMap; /**< Map containing the list of open tabs indexed by their associated section*/
 		
+		void reinitialize ();
+
 		/** \brief convinience function
 		 * 
 		 * Sets the default properties of a Gtk::Window to defaults specific

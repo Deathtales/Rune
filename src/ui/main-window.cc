@@ -32,9 +32,8 @@
 MainWindow::MainWindow(){
 	this->editionHPaned = NULL;
 	this->currentProject = NULL;
-	this->setDefaultProperties();
 	this->tabOpened = false;
-	
+	this->setDefaultProperties();
 	mainVBox = Gtk::manage(new Gtk::VBox);
 	mainVBox->show();
 	this->add(*mainVBox);
@@ -44,11 +43,20 @@ MainWindow::MainWindow(){
 
 }
 
+void MainWindow::reinitialize(){
+	if(this->currentProject)
+		delete this->currentProject;
+	this->editionHPaned = NULL;
+	this->currentProject = NULL;
+	this->tabOpened = false;
+}
+
 void MainWindow::createNewProject(){
 	NewResourceDialog dialog(PROJECT,this);
 	Glib::ustring name;
 	int response = dialog.run();
 	if(response == Gtk::RESPONSE_OK){
+		this->reinitialize ();
 		if (dialog.getName() == ""){
 			name = "untitled";
 		}
@@ -56,7 +64,7 @@ void MainWindow::createNewProject(){
 			name = dialog.getName();
 		}
 		currentProject = new Project(name,dialog.getDescription(),this);
-		this->set_title("Rune: " + currentProject->name);
+		this->set_title(currentProject->name + " - Rune");
 		this->setMainContent(getEditionPaned());
 	}
 	
@@ -78,10 +86,12 @@ bool MainWindow::on_delete_event(GdkEventAny* event){
 			dial.add_button(Gtk::Stock::SAVE, Gtk::RESPONSE_OK);
 			int response = dial.run();
 			if(response == Gtk::RESPONSE_REJECT){
+				this->reinitialize ();
 				return Gtk::Widget::on_delete_event(event);
 			}
 			if(response == Gtk::RESPONSE_OK){
 				saveProject();
+				this->reinitialize ();
 				return Gtk::Widget::on_delete_event(event);
 			}
 			else{
@@ -89,10 +99,12 @@ bool MainWindow::on_delete_event(GdkEventAny* event){
 			}
 		}
 		else{
+			this->reinitialize ();
 			return Gtk::Widget::on_delete_event(event);
 		}
 	}
 	else{
+		this->reinitialize ();
 		return Gtk::Widget::on_delete_event(event);
 	}
 }
@@ -152,9 +164,11 @@ void MainWindow::openProject(){
 	dial.add_filter(runeFilter);
 	int response = dial.run();
 	if(response == Gtk::RESPONSE_OK){
+		this->reinitialize ();
 		Glib::RefPtr<Gio::File> runeFile = dial.get_file();
 		currentProject = Project::createFromRuneFile(runeFile->get_parent()->get_uri(),runeFile->get_uri(), this);
 		this->setMainContent(this->getEditionPaned());
+		this->set_title(currentProject->name + " - Rune");
 	}
 
 }
