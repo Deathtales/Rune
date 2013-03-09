@@ -31,6 +31,7 @@
 #include <gtkmm/image.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/messagedialog.h>
+#include <gtkmm/checkbutton.h>
 
 #include "converters/markdown-converter.h"
 #include "ui/project-tree-view.h"
@@ -124,6 +125,12 @@ private:
 	 */
 	void removeResource();
 
+	/** \brief Exports a book
+	 * 
+	 * Exports a book to Markdown format after asking for convertOptions;
+	 */
+	void getConvertOptions(std::map<Glib::ustring,Glib::ustring> rt);
+	
 	/** \brief Exports a book
 	 * 
 	 * Exports a book to Markdown format;

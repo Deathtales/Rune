@@ -244,13 +244,35 @@ void ProjectTreeZone::openSection(){
 	signal_section_open().emit(selected);
 }
 
+void ProjectTreeZone::getConvertOptions(std::map<Glib::ustring,Glib::ustring> rt){
+	Gtk::Dialog* dial = new Gtk::Dialog( "Convertion Options", *currentProject->getAssociatedWindow(), true);
+	Gtk::Box* dialVBox = dial->get_vbox();
+	Gtk::HBox* authorHBox = Gtk::manage(new Gtk::HBox);
+	Gtk::Label* authorLabel = Gtk::manage(new Gtk::Label("Name of the author: "));
+	Gtk::Entry* authorEntry = Gtk::manage(new Gtk::Entry);
+	Gtk::CheckButton *useShNameButton = Gtk::manage(new Gtk::CheckButton("Display Short Name before Name in output."));
+	authorHBox->pack_start(*authorLabel);
+	authorHBox->pack_end(*authorEntry);	
+	dialVBox->pack_start(*authorHBox);
+	dialVBox->pack_end(*useShNameButton);
+	dial->add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+	dial->add_button(Gtk::Stock::CONVERT, Gtk::RESPONSE_OK);
+	dial->show_all();
+	int response = dial->run();
+	if(response = Gtk::RESPONSE_OK){
+		ConvertOptions* co = new ConvertOptions(authorEntry->get_text(),useShNameButton->get_active(),rt,currentProject->name);
+		Glib::ustring uri = currentProject->getPath();
+		MarkdownConverter::convertToFile(uri,selected,*co);
+		delete dial;
+		delete co;
+	}
+}
+
 void ProjectTreeZone::convertResourceToMarkdown(){
 	std::map<Glib::ustring,Glib::ustring> rt;
 	rt["--"] = "\xe2\x80\x94";
 	rt["\n"] = "\n\n";
-	ConvertOptions* co = new ConvertOptions("Julien SOSTHÈNE",true,rt,currentProject->name);
-	Glib::ustring uri = currentProject->getPath();
-	MarkdownConverter::convertToFile(uri,selected,*co);
+	getConvertOptions(rt);
 }
 
 void ProjectTreeZone::on_menu_waiting(Section* sec, GdkEventButton* event){
