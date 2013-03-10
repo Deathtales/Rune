@@ -31,28 +31,31 @@
 
 class ReplacementTableDialog: public Gtk::Dialog 
 {
-public:
-	ReplacementTableDialog(Gtk::Window* parent);
-protected:
-	Gtk::Entry* sourceEntry;
-	Gtk::Entry* destEntry;
-	Gtk::Box* dialogVBox;
+	public:
+		ReplacementTableDialog(Gtk::Window* parent);
+	protected:
+		Gtk::Entry* sourceEntry;
+		Gtk::Entry* destEntry;
+		Gtk::Box* dialogVBox;
 
-	class ModelColumns : public Gtk::TreeModel::ColumnRecord
-  {
-  public:
+		class ModelColumns : public Gtk::TreeModel::ColumnRecord
+	{
+		public:
 
-    ModelColumns()
-    { add(src); add(dest); }
+			ModelColumns()
+		{ add(src); add(dest); }
 
-    Gtk::TreeModelColumn<Glib::ustring> src;
-    Gtk::TreeModelColumn<Glib::ustring> dest;
-  };
+			Gtk::TreeModelColumn<Glib::ustring> src;
+			Gtk::TreeModelColumn<Glib::ustring> dest;
+	};
 
-  ModelColumns columns;
-  Gtk::TreeView* listView;
-  Glib::RefPtr<Gtk::ListStore> refTreeModel;
-private:
+		ModelColumns columns;
+		Gtk::TreeView* listView;
+		Glib::RefPtr<Gtk::ListStore> refTreeModel;
+
+		void addEntry();
+		void removeEntry(GdkEventButton* button);
+		private:
 
 };
 
