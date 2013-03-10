@@ -5,12 +5,9 @@ SUBDIRS = src po
 
 runedocdir = ${prefix}/doc/rune
 runedoc_DATA = \
-	README\
 	COPYING\
 	AUTHORS\
-	ChangeLog\
-	INSTALL\
-	NEWS
+	INSTALL
 
 
 INTLTOOL_FILES = intltool-extract.in \

@@ -41,7 +41,9 @@ rune_SOURCES = \
 	converters/convert-options.cc \
 	converters/convert-options.h \
 	utils/xml-utils.cc \
-	utils/xml-utils.h
+	utils/xml-utils.h \
+	ui/replacement-table-dialog.cc \
+	ui/replacement-table-dialog.h
 
 rune_LDFLAGS = 
 

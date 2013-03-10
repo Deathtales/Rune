@@ -50,6 +50,7 @@
 #include "entities/project.h"
 #include "ui/new-resource-dialog.h"
 #include "ui/project-tree-zone.h"
+#include "ui/replacement-table-dialog.h"
 
 /** \class MainWindow
  * \brief Main window 
@@ -182,6 +183,8 @@ class MainWindow: public Gtk::Window
 		 * changes current theme for dark one.
 		 */
 		void switchToDarkMode();
+
+		void openReplacementTable();
 };
 
 #endif // _EDIT_WINDOW_H_

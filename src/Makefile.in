@@ -69,7 +69,8 @@ am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
 	scene.$(OBJEXT) main-window.$(OBJEXT) project-store.$(OBJEXT) \
 	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT) \
 	book-converter.$(OBJEXT) markdown-converter.$(OBJEXT) \
-	convert-options.$(OBJEXT) xml-utils.$(OBJEXT)
+	convert-options.$(OBJEXT) xml-utils.$(OBJEXT) \
+	replacement-table-dialog.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -347,7 +348,9 @@ rune_SOURCES = \
 	converters/convert-options.cc \
 	converters/convert-options.h \
 	utils/xml-utils.cc \
-	utils/xml-utils.h
+	utils/xml-utils.h \
+	ui/replacement-table-dialog.cc \
+	ui/replacement-table-dialog.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -455,6 +458,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-tree-view.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project-tree-zone.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/project.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/replacement-table-dialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scene.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/section.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml-utils.Po@am__quote@
@@ -647,6 +651,20 @@ xml-utils.obj: utils/xml-utils.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/xml-utils.cc' object='xml-utils.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o xml-utils.obj `if test -f 'utils/xml-utils.cc'; then $(CYGPATH_W) 'utils/xml-utils.cc'; else $(CYGPATH_W) '$(srcdir)/utils/xml-utils.cc'; fi`
+
+replacement-table-dialog.o: ui/replacement-table-dialog.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT replacement-table-dialog.o -MD -MP -MF $(DEPDIR)/replacement-table-dialog.Tpo -c -o replacement-table-dialog.o `test -f 'ui/replacement-table-dialog.cc' || echo '$(srcdir)/'`ui/replacement-table-dialog.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/replacement-table-dialog.Tpo $(DEPDIR)/replacement-table-dialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/replacement-table-dialog.cc' object='replacement-table-dialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o replacement-table-dialog.o `test -f 'ui/replacement-table-dialog.cc' || echo '$(srcdir)/'`ui/replacement-table-dialog.cc
+
+replacement-table-dialog.obj: ui/replacement-table-dialog.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT replacement-table-dialog.obj -MD -MP -MF $(DEPDIR)/replacement-table-dialog.Tpo -c -o replacement-table-dialog.obj `if test -f 'ui/replacement-table-dialog.cc'; then $(CYGPATH_W) 'ui/replacement-table-dialog.cc'; else $(CYGPATH_W) '$(srcdir)/ui/replacement-table-dialog.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/replacement-table-dialog.Tpo $(DEPDIR)/replacement-table-dialog.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/replacement-table-dialog.cc' object='replacement-table-dialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o replacement-table-dialog.obj `if test -f 'ui/replacement-table-dialog.cc'; then $(CYGPATH_W) 'ui/replacement-table-dialog.cc'; else $(CYGPATH_W) '$(srcdir)/ui/replacement-table-dialog.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

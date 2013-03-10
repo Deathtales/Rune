@@ -203,10 +203,13 @@ Gtk::MenuBar* MainWindow::getMainMenuBar(){
 		Gtk::manage(new Gtk::MenuItem("_Project", true));
 	Gtk::MenuItem* menuItemDisplay = 
 		Gtk::manage(new Gtk::MenuItem("_Display", true));
+	Gtk::MenuItem* menuItemTools = 
+		Gtk::manage(new Gtk::MenuItem("_Tools", true));
 	Gtk::MenuItem* menuItemHelp = 
 		Gtk::manage(new Gtk::MenuItem("_Help", true));
 	menuBar->append(*menuItemFile);
 	menuBar->append(*menuItemDisplay);
+	menuBar->append(*menuItemTools);
 	menuBar->append(*menuItemHelp); 
 
 	//Adding submenu File
@@ -250,6 +253,19 @@ Gtk::MenuBar* MainWindow::getMainMenuBar(){
 	darkModeItem->set_image(*Gtk::manage(new Gtk::Image(Gdk::Pixbuf::create_from_file("images/dark-mode.svg", 20,20))));
 	darkModeItem->signal_activate().connect(sigc::mem_fun(*this,&MainWindow::switchToDarkMode));
 	displayMenu->append(*darkModeItem);
+
+	//Adding Tools submenu
+	Gtk::Menu* toolsMenu = Gtk::manage(new Gtk::Menu);
+	menuItemTools->set_submenu(*toolsMenu);
+
+	Gtk::ImageMenuItem* replacementTableItem = 
+		Gtk::manage(new Gtk::ImageMenuItem("_Replacement Table",true));
+	replacementTableItem->set_image(*Gtk::manage(new Gtk::Image(Gdk::Pixbuf::create_from_file("images/ReplacementTable.svg", 20,20))));
+	replacementTableItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::openReplacementTable));
+	toolsMenu->append(*replacementTableItem);
+
+
+	//Return menu bar.
 	return menuBar;
 
 }
@@ -406,6 +422,12 @@ void MainWindow::switchToDarkMode(){
 	Glib::RefPtr<Gdk::Screen> screen = Gdk::Screen::get_default();
 	Glib::RefPtr<Gtk::StyleContext> ctx = get_style_context();
 	ctx->add_provider_for_screen(screen, css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+void MainWindow::openReplacementTable(){
+	ReplacementTableDialog* rpd = new ReplacementTableDialog(this);
+	rpd->run();
+	delete rpd;
 }
 
 MainWindow::~MainWindow(){
