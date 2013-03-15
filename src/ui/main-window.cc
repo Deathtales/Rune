@@ -322,8 +322,12 @@ void MainWindow::openNewTab(Section* sec){
 			Gtk::HBox* tabLabelBox = Gtk::manage(new Gtk::HBox);
 			Gtk::Label* tabLabel = Gtk::manage(new Gtk::Label(sec->name));
 			Gtk::Button* tabButton = Gtk::manage(new Gtk::Button);
+			Gtk::Button* tabSaveButton = Gtk::manage(new Gtk::Button);
 			Gtk::Image* fileImage = 
 				Gtk::manage(new Gtk::Image(Gtk::Stock::FILE, 
+				                           Gtk::ICON_SIZE_MENU));
+			Gtk::Image* saveImage = 
+				Gtk::manage(new Gtk::Image(Gtk::Stock::SAVE, 
 				                           Gtk::ICON_SIZE_MENU));
 			Gtk::Image* closeImage = 
 				Gtk::manage(new Gtk::Image(Gtk::Stock::CLOSE, 
@@ -331,10 +335,12 @@ void MainWindow::openNewTab(Section* sec){
 
 			tabButton->set_image(*closeImage);
 			tabButton->set_can_focus (false);
-
+			tabSaveButton->set_image(*saveImage);
+			tabSaveButton->set_can_focus (false);
 
 			tabLabelBox->pack_start(*fileImage);
 			tabLabelBox->pack_start(*tabLabel);
+			tabLabelBox->pack_start(*tabSaveButton);
 			tabLabelBox->pack_end(*tabButton);
 			tabLabelBox->show_all();
 			Gtk::ScrolledWindow* sceneViewScrolled = 
@@ -374,10 +380,23 @@ void MainWindow::openNewTab(Section* sec){
 			                                                notebook,
 					                                        sceneView, 
 					                                        scene));
+
+			tabSaveButton->signal_clicked().connect( 
+			                                    sigc::bind<
+			                                		Gtk::TextView*,
+			                                		Scene*>(
+			                                                sigc::mem_fun(*this,&MainWindow::saveScene),
+					                                        sceneView, 
+					                                        scene));
 			tabMap[scene] = sceneView;
 			show_all();
 		}
 	}
+}
+
+void MainWindow::saveScene(Gtk::TextView* tv, Scene* sc){
+	sc->setBody(tv->get_buffer()->get_text());
+	sc->saveToFile();
 }
 
 void MainWindow::on_close_tab(Gtk::ScrolledWindow *sw, Gtk::Notebook* nb, Gtk::TextView* tv, Scene* scene){

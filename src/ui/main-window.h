@@ -83,6 +83,13 @@ class MainWindow: public Gtk::Window
 		 * \return A boolean to see if it worked well.
 		 */
 		virtual bool on_delete_event(GdkEventAny* event);
+
+		/** \brief Saves an opened scene
+		 * 
+		 * saves the Scene to a file or at least to Project Tree if project not saved.
+		 * 
+		 */
+		void saveScene(Gtk::TextView* tv, Scene* sc);
 	private:
 		Project* currentProject; /**< The currently edited project */
 		UserConfiguration* userConfiguration; /**< The user config: author, replacement table... */
