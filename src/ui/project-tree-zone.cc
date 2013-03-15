@@ -20,9 +20,10 @@
 #include "ui/project-tree-zone.h"
 
 
-ProjectTreeZone::ProjectTreeZone(Project *currentProject){
+ProjectTreeZone::ProjectTreeZone(Project *currentProject, UserConfiguration* uc){
 	// initialize object properties:
 	this->currentProject = currentProject;
+	this->userConfiguration = uc;
 	this->projectTreeView = Gtk::manage(new ProjectTreeView(currentProject));
 	this->projectZoneMenu = NULL;
 
@@ -269,10 +270,7 @@ void ProjectTreeZone::getConvertOptions(std::map<Glib::ustring,Glib::ustring> rt
 }
 
 void ProjectTreeZone::convertResourceToMarkdown(){
-	std::map<Glib::ustring,Glib::ustring> rt;
-	rt["--"] = "\xe2\x80\x94";
-	rt["\n"] = "\n\n";
-	getConvertOptions(rt);
+	getConvertOptions(userConfiguration->getReplacementTable ());
 }
 
 void ProjectTreeZone::on_menu_waiting(Section* sec, GdkEventButton* event){

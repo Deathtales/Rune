@@ -41,6 +41,7 @@
 #include "ui/new-resource-dialog.h"
 #include "project-store.h"
 #include "converters/book-converter.h"
+#include "utils/user-configuration.h"
 
 /** \class ProjectTreeZone
  * \brief Vbox containing menu and ProjectTreeView
@@ -58,7 +59,7 @@ public:
 	 *
 	 * \param[in] currentProject Current opened project
 	 */
-	ProjectTreeZone(Project *currentProject);
+	ProjectTreeZone(Project *currentProject, UserConfiguration* uc);
 	
 	/** \brief Throws a signal to the main window.
 	 * 
@@ -81,6 +82,7 @@ private:
 	ProjectTreeView* projectTreeView; /**<TreeView contained in this VBox*/
 	Gtk::Menu* projectZoneMenu; /**<Popup menu for creating/editing resources*/
 	Project* currentProject; /**<Current opened project*/
+	UserConfiguration* userConfiguration; /**<User defined parameters*/
 	Section* selected; /**<Selected section in the ProjectTreeView*/
 	Gtk::ImageMenuItem* newBook; /**<MenuItem of the projectZoneMenu*/
 	Gtk::ImageMenuItem* newPart; /**<MenuItem of the projectZoneMenu*/

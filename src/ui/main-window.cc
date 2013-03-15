@@ -291,7 +291,7 @@ Gtk::HPaned* MainWindow::getEditionPaned(){
 	editionHPaned = Gtk::manage(new Gtk::HPaned);
 	Gtk::VPaned* structureVPaned = Gtk::manage(new Gtk::VPaned);
 	ProjectTreeZone* projectTreeZone =
-		Gtk::manage(new ProjectTreeZone(currentProject));
+		Gtk::manage(new ProjectTreeZone(currentProject, userConfiguration));
 	projectTreeZone->signal_section_open()
 		.connect(sigc::mem_fun(*this,&MainWindow::openNewTab));
 	projectTreeZone->openView();
