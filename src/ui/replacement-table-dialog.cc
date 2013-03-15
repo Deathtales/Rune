@@ -19,12 +19,13 @@
 
 #include "replacement-table-dialog.h"
 
-ReplacementTableDialog::ReplacementTableDialog(Gtk::Window* parent): Gtk::Dialog( "Replacement Table", *parent, true),dialogVBox(get_vbox()){
-
+ReplacementTableDialog::ReplacementTableDialog(Gtk::Window* parent, UserConfiguration* config): Gtk::Dialog( "Replacement Table", *parent, true),dialogVBox(get_vbox()){
+	this->userConfig = config;
 	//Define structure
 	Gtk::HBox* entryHBox = Gtk::manage(new Gtk::HBox);
 	Gtk::Label* instructions = Gtk::manage(new Gtk::Label("Note: replacement will only occur when you export a book."));
 	Gtk::Label* instructions2 = Gtk::manage(new Gtk::Label("Double right-click on an entry to remove it."));
+	Gtk::Label* instructions3 = Gtk::manage(new Gtk::Label("Default entries are for no-breack spaces and long dash."));
 	sourceEntry = Gtk::manage(new Gtk::Entry);
 	sourceEntry->set_placeholder_text("Replace This...");
 	destEntry = Gtk::manage(new Gtk::Entry);
@@ -51,14 +52,18 @@ ReplacementTableDialog::ReplacementTableDialog(Gtk::Window* parent): Gtk::Dialog
 	listView->append_column("With", columns.dest);
 	dialogVBox->pack_start(*instructions, Gtk::PACK_SHRINK);
 	dialogVBox->pack_start(*instructions2, Gtk::PACK_SHRINK);
+	dialogVBox->pack_start(*instructions3, Gtk::PACK_SHRINK);
 	dialogVBox->pack_start(*entryHBox, Gtk::PACK_SHRINK);
 	dialogVBox->pack_start(*scrWindow, Gtk::PACK_EXPAND_WIDGET);
 	add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_OK);
 
 	 //Fill the TreeView's model
-	Gtk::TreeModel::Row row = *(refTreeModel->append());
-	row[columns.src] = "--";
-	row[columns.dest] = "\xe2\x80\x94";
+		std::map<Glib::ustring,Glib::ustring> table = config->getReplacementTable();
+	for (std::map<Glib::ustring,Glib::ustring>::iterator it=table.begin(); it!=table.end(); ++it){
+		Gtk::TreeModel::Row row = *(refTreeModel->append());
+		row[columns.src] = it->first;
+		row[columns.dest] = it->second;
+	}
 
 	set_size_request(-1,400);
 	dialogVBox->show_all();
@@ -67,10 +72,12 @@ ReplacementTableDialog::ReplacementTableDialog(Gtk::Window* parent): Gtk::Dialog
 
 void ReplacementTableDialog::addEntry(){
 	Glib::ustring src = sourceEntry->get_text();
+	Glib::ustring dest = destEntry->get_text();
 	if(src != ""){
 		Gtk::TreeModel::Row row = *(refTreeModel->append());
 		row[columns.src] = src;
-		row[columns.dest] = destEntry->get_text();
+		row[columns.dest] = dest;
+		userConfig->addToReplacementTable (src,dest);
 		sourceEntry->set_text("");
 		destEntry->set_text("");
 		
@@ -87,6 +94,7 @@ void ReplacementTableDialog::removeEntry(GdkEventButton* event){
 			Gtk::TreeModel::iterator iter = refSelection->get_selected();
 			if(iter)
 			{
+				userConfig->eraseFromReplacementTable((*iter)[columns.src]);
 				refTreeModel->erase(iter);
 			}
 		}

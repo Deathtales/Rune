@@ -33,13 +33,15 @@ public:
 	~UserConfiguration();
 	void writeConfiguration();
 	std::map<Glib::ustring,Glib::ustring> getReplacementTable();
-	void setReplacementTable(std::map<Glib::ustring,Glib::ustring> rt);
+	void addToReplacementTable(Glib::ustring src, Glib::ustring dest);
+	void eraseFromReplacementTable(Glib::ustring src);
 protected:
 	std::map<Glib::ustring,Glib::ustring> replacementTable;
 	Glib::ustring homePath;
 	void readConfiguration(Glib::RefPtr<Gio::File> file);
 	void parseReplacementTable(xmlpp::Node* node);
 	void addReplacementTableToXml(xmlpp::Element* root);
+	
 private:
 
 };

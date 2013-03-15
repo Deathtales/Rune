@@ -51,6 +51,7 @@
 #include "ui/new-resource-dialog.h"
 #include "ui/project-tree-zone.h"
 #include "ui/replacement-table-dialog.h"
+#include "utils/user-configuration.h"
 
 /** \class MainWindow
  * \brief Main window 
@@ -84,6 +85,7 @@ class MainWindow: public Gtk::Window
 		virtual bool on_delete_event(GdkEventAny* event);
 	private:
 		Project* currentProject; /**< The currently edited project */
+		UserConfiguration* userConfiguration; /**< The user config: author, replacement table... */
 		Gtk::VBox* mainVBox; /**< The main container in the main window */
 		Gtk::HPaned* editionHPaned; /**< The main container of the edit view*/
 		Gtk::Notebook* notebook; /**< The main notebook for edition view*/

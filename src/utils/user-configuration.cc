@@ -18,7 +18,7 @@
  */
 
 #include "user-configuration.h"
-
+#include <iostream>
 
 UserConfiguration::UserConfiguration(){
 	homePath = Glib::get_home_dir();
@@ -105,6 +105,10 @@ std::map<Glib::ustring,Glib::ustring> UserConfiguration::getReplacementTable(){
 	return this->replacementTable;
 }
 
-void UserConfiguration::setReplacementTable(std::map<Glib::ustring,Glib::ustring> rt){
-	this->replacementTable = rt;
+void UserConfiguration::addToReplacementTable(Glib::ustring src, Glib::ustring dest){
+	this->replacementTable[src] = dest;
+}
+
+void UserConfiguration::eraseFromReplacementTable(Glib::ustring src){
+	replacementTable.erase(replacementTable.find(src));
 }

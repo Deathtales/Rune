@@ -28,15 +28,17 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/infobar.h>
+#include "utils/user-configuration.h"
 
 class ReplacementTableDialog: public Gtk::Dialog 
 {
 	public:
-		ReplacementTableDialog(Gtk::Window* parent);
+		ReplacementTableDialog(Gtk::Window* parent, UserConfiguration* config);
 	protected:
 		Gtk::Entry* sourceEntry;
 		Gtk::Entry* destEntry;
 		Gtk::Box* dialogVBox;
+		UserConfiguration* userConfig;
 
 		class ModelColumns : public Gtk::TreeModel::ColumnRecord
 	{

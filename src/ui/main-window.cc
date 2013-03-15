@@ -32,6 +32,7 @@
 MainWindow::MainWindow(){
 	this->editionHPaned = NULL;
 	this->currentProject = NULL;
+	this->userConfiguration = new UserConfiguration();
 	this->tabOpened = false;
 	this->setDefaultProperties();
 	mainVBox = Gtk::manage(new Gtk::VBox);
@@ -108,6 +109,7 @@ bool MainWindow::checkForChanges(){
 
 bool MainWindow::on_delete_event(GdkEventAny* event){
 	if (!checkForChanges()){
+		userConfiguration->writeConfiguration();
 		this->reinitialize ();
 		return Gtk::Widget::on_delete_event(event);
 	}
@@ -212,7 +214,7 @@ Gtk::MenuBar* MainWindow::getMainMenuBar(){
 	menuBar->append(*menuItemTools);
 	menuBar->append(*menuItemHelp); 
 
-	//Adding submenu File
+	//Adding submenu Project
 	Gtk::Menu* fileMenu = Gtk::manage(new Gtk::Menu);
 	menuItemFile->set_submenu(*fileMenu);
 	Gtk::ImageMenuItem* newProjectItem = 
@@ -425,11 +427,12 @@ void MainWindow::switchToDarkMode(){
 }
 
 void MainWindow::openReplacementTable(){
-	ReplacementTableDialog* rpd = new ReplacementTableDialog(this);
+	ReplacementTableDialog* rpd = new ReplacementTableDialog(this, userConfiguration);
 	rpd->run();
 	delete rpd;
 }
 
 MainWindow::~MainWindow(){
 	delete currentProject;
+	delete userConfiguration;
 }
