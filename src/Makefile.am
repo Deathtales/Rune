@@ -43,7 +43,9 @@ rune_SOURCES = \
 	utils/xml-utils.cc \
 	utils/xml-utils.h \
 	ui/replacement-table-dialog.cc \
-	ui/replacement-table-dialog.h
+	ui/replacement-table-dialog.h \
+	utils/user-configuration.cc \
+	utils/user-configuration.h
 
 rune_LDFLAGS = 
 

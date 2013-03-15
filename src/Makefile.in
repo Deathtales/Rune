@@ -70,7 +70,8 @@ am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
 	project-tree-view.$(OBJEXT) project-tree-zone.$(OBJEXT) \
 	book-converter.$(OBJEXT) markdown-converter.$(OBJEXT) \
 	convert-options.$(OBJEXT) xml-utils.$(OBJEXT) \
-	replacement-table-dialog.$(OBJEXT)
+	replacement-table-dialog.$(OBJEXT) \
+	user-configuration.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -350,7 +351,9 @@ rune_SOURCES = \
 	utils/xml-utils.cc \
 	utils/xml-utils.h \
 	ui/replacement-table-dialog.cc \
-	ui/replacement-table-dialog.h
+	ui/replacement-table-dialog.h \
+	utils/user-configuration.cc \
+	utils/user-configuration.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -461,6 +464,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/replacement-table-dialog.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scene.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/section.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/user-configuration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xml-utils.Po@am__quote@
 
 .cc.o:
@@ -665,6 +669,20 @@ replacement-table-dialog.obj: ui/replacement-table-dialog.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='ui/replacement-table-dialog.cc' object='replacement-table-dialog.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o replacement-table-dialog.obj `if test -f 'ui/replacement-table-dialog.cc'; then $(CYGPATH_W) 'ui/replacement-table-dialog.cc'; else $(CYGPATH_W) '$(srcdir)/ui/replacement-table-dialog.cc'; fi`
+
+user-configuration.o: utils/user-configuration.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT user-configuration.o -MD -MP -MF $(DEPDIR)/user-configuration.Tpo -c -o user-configuration.o `test -f 'utils/user-configuration.cc' || echo '$(srcdir)/'`utils/user-configuration.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/user-configuration.Tpo $(DEPDIR)/user-configuration.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/user-configuration.cc' object='user-configuration.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o user-configuration.o `test -f 'utils/user-configuration.cc' || echo '$(srcdir)/'`utils/user-configuration.cc
+
+user-configuration.obj: utils/user-configuration.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT user-configuration.obj -MD -MP -MF $(DEPDIR)/user-configuration.Tpo -c -o user-configuration.obj `if test -f 'utils/user-configuration.cc'; then $(CYGPATH_W) 'utils/user-configuration.cc'; else $(CYGPATH_W) '$(srcdir)/utils/user-configuration.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/user-configuration.Tpo $(DEPDIR)/user-configuration.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/user-configuration.cc' object='user-configuration.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o user-configuration.obj `if test -f 'utils/user-configuration.cc'; then $(CYGPATH_W) 'utils/user-configuration.cc'; else $(CYGPATH_W) '$(srcdir)/utils/user-configuration.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
