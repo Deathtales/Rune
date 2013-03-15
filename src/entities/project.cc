@@ -79,6 +79,7 @@ void Project::save(){
 	xmlDoc->write_to_file_formatted (runeFile->get_uri());
 	Glib::RefPtr<Gtk::RecentManager> recent_manager = Gtk::RecentManager::get_default();
 	recent_manager->add_item(runeFile->get_uri());
+	this->changesToProject = false;
 }
 
 void Project::setPath(Glib::ustring uri){
