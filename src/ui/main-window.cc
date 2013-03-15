@@ -44,6 +44,14 @@ MainWindow::MainWindow(){
 
 }
 
+void MainWindow::quit(){
+	if (!checkForChanges()){
+		userConfiguration->writeConfiguration();
+		this->reinitialize ();
+		Gtk::Main::quit();
+	}
+}
+
 void MainWindow::reinitialize(){
 	if(this->currentProject)
 		delete this->currentProject;
@@ -73,7 +81,8 @@ void MainWindow::createNewProject(){
 }
 
 bool MainWindow::checkForChanges(){
-		if(currentProject){
+	if(currentProject){
+		bool oldChangesToProject = currentProject->changesToProject;
 		for (std::map<Scene*,Gtk::TextView*>::iterator it=tabMap.begin(); it!=tabMap.end(); ++it)
 			if(it->first->getBody() != it->second->get_buffer()->get_text()){
 				currentProject->changesToProject = true;
@@ -95,6 +104,7 @@ bool MainWindow::checkForChanges(){
 				return false;
 			}
 			else{
+				currentProject->changesToProject = oldChangesToProject;
 				return true;
 			}
 		}
@@ -237,7 +247,7 @@ Gtk::MenuBar* MainWindow::getMainMenuBar(){
 	fileMenu->append(*separator);
 	Gtk::ImageMenuItem* quitItem = 
 		Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::QUIT));
-	quitItem->signal_activate().connect(sigc::ptr_fun(&Gtk::Main::quit));
+	quitItem->signal_activate().connect(sigc::mem_fun(*this, &MainWindow::quit));
 	fileMenu->append(*quitItem);
 
 	//Adding Display submenu

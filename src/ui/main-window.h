@@ -98,6 +98,8 @@ class MainWindow: public Gtk::Window
 		Gtk::Notebook* notebook; /**< The main notebook for edition view*/
 		bool tabOpened; /**< Indicator to create a notebook.*/
 		std::map<Scene*,Gtk::TextView*> tabMap; /**< Map containing the list of open tabs indexed by their associated section*/
+
+		void quit();
 		
 		void reinitialize ();
 
