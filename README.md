@@ -51,7 +51,8 @@ Please make sure you have all that installed before compiling Rune.
 - [x] English translation
 
 ### Version 0.0.3
-- [ ] Text export
+- [x] Markdown export
+- [x] Automatic replacement table
 - [ ] HTML export
 
 ### Version 0.0.4
