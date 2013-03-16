@@ -28,6 +28,7 @@ class BookConverter
 {
 public:
 protected:
+	static Glib::ustring replacePair(Glib::ustring text,Glib::ustring src, Glib::ustring dest1, Glib::ustring dest2);
 	static Glib::ustring replaceCharacters(Glib::ustring text,Glib::ustring src, Glib::ustring dest);
 	static Glib::ustring processReplacementTable(Scene* scene,std::map<Glib::ustring,Glib::ustring> table);
 	static Glib::ustring intToUString (int val);

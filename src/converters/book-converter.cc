@@ -18,6 +18,7 @@
  */
 
 #include "book-converter.h"
+#include <iostream>
 
 Glib::ustring BookConverter::replaceCharacters(Glib::ustring text,Glib::ustring src, Glib::ustring dest){
 	int pos = 0;
@@ -31,12 +32,31 @@ Glib::ustring BookConverter::replaceCharacters(Glib::ustring text,Glib::ustring 
 	return buffer;
 }
 
+
+Glib::ustring BookConverter::replacePair(Glib::ustring text,Glib::ustring src, Glib::ustring dest1, Glib::ustring dest2){
+	int pos = 0;
+	int occurence1 = text.find(src,pos);
+	int occurence2 = 0;
+	Glib::ustring buffer = text;
+	while(occurence1 != Glib::ustring::npos){
+		buffer.replace(occurence1, src.length(), dest1);
+		occurence2 = buffer.find(src,occurence1 + dest1.length());
+		if(occurence2 != Glib::ustring::npos){
+			buffer.replace(occurence2, src.length(), dest2);
+		}
+		pos = occurence2 + dest2.length();
+		occurence1 = buffer.find(src,pos);
+	}
+	return buffer;
+}
+
 Glib::ustring BookConverter::processReplacementTable(Scene* scene,
                                                      std::map<Glib::ustring,
                                                      Glib::ustring> table){
 	Glib::ustring buffer = scene->getBody();
 	for (std::map<Glib::ustring,Glib::ustring>::iterator it=table.begin(); it!=table.end(); ++it)
 		buffer = replaceCharacters(buffer,it->first,it->second);
+	buffer = replacePair(buffer,"\"","\xc2\xab\xc2\xa0", "\xc2\xa0\xc2\xbb");
 	return buffer;
 }
 
