@@ -71,7 +71,7 @@ am_rune_OBJECTS = main.$(OBJEXT) project.$(OBJEXT) \
 	book-converter.$(OBJEXT) markdown-converter.$(OBJEXT) \
 	convert-options.$(OBJEXT) xml-utils.$(OBJEXT) \
 	replacement-table-dialog.$(OBJEXT) \
-	user-configuration.$(OBJEXT)
+	user-configuration.$(OBJEXT) html-converter-base.$(OBJEXT)
 rune_OBJECTS = $(am_rune_OBJECTS)
 am__DEPENDENCIES_1 =
 rune_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -353,7 +353,9 @@ rune_SOURCES = \
 	ui/replacement-table-dialog.cc \
 	ui/replacement-table-dialog.h \
 	utils/user-configuration.cc \
-	utils/user-configuration.h
+	utils/user-configuration.h \
+	converters/html-converter-base.cc \
+	converters/html-converter-base.h
 
 rune_LDFLAGS = 
 rune_LDADD = $(RUNE_LIBS)
@@ -453,6 +455,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/book-converter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/convert-options.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/html-converter-base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main-window.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown-converter.Po@am__quote@
@@ -683,6 +686,20 @@ user-configuration.obj: utils/user-configuration.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='utils/user-configuration.cc' object='user-configuration.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o user-configuration.obj `if test -f 'utils/user-configuration.cc'; then $(CYGPATH_W) 'utils/user-configuration.cc'; else $(CYGPATH_W) '$(srcdir)/utils/user-configuration.cc'; fi`
+
+html-converter-base.o: converters/html-converter-base.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT html-converter-base.o -MD -MP -MF $(DEPDIR)/html-converter-base.Tpo -c -o html-converter-base.o `test -f 'converters/html-converter-base.cc' || echo '$(srcdir)/'`converters/html-converter-base.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/html-converter-base.Tpo $(DEPDIR)/html-converter-base.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/html-converter-base.cc' object='html-converter-base.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o html-converter-base.o `test -f 'converters/html-converter-base.cc' || echo '$(srcdir)/'`converters/html-converter-base.cc
+
+html-converter-base.obj: converters/html-converter-base.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT html-converter-base.obj -MD -MP -MF $(DEPDIR)/html-converter-base.Tpo -c -o html-converter-base.obj `if test -f 'converters/html-converter-base.cc'; then $(CYGPATH_W) 'converters/html-converter-base.cc'; else $(CYGPATH_W) '$(srcdir)/converters/html-converter-base.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/html-converter-base.Tpo $(DEPDIR)/html-converter-base.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='converters/html-converter-base.cc' object='html-converter-base.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o html-converter-base.obj `if test -f 'converters/html-converter-base.cc'; then $(CYGPATH_W) 'converters/html-converter-base.cc'; else $(CYGPATH_W) '$(srcdir)/converters/html-converter-base.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

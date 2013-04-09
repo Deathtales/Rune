@@ -368,11 +368,15 @@ void MainWindow::openNewTab(Section* sec){
 			sceneView->set_indent(30);
 			sceneView->set_border_width(10);
 			sceneViewScrolled->add(*sceneView);
-			gtkspell_new_attach (sceneView->gobj(),
+			/*gtkspell_new_attach (sceneView->gobj(),
 			                     setlocale(LC_CTYPE,
 			                               NULL),
 			                     NULL);
-			gtkspell_init ();
+			gtkspell_init ();*/
+			//new code
+			GtkSpellChecker *gtkSpell = gtk_spell_checker_new();
+			gtk_spell_checker_attach(gtkSpell,sceneView->gobj());
+			gtk_spell_checker_set_language(gtkSpell, setlocale(LC_CTYPE,NULL), NULL);
 			int number = notebook->append_page(*sceneViewScrolled,
 			                                   *tabLabelBox, 
 			                                   *Gtk::manage(new Gtk::Label(sec->name)));

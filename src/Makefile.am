@@ -45,7 +45,9 @@ rune_SOURCES = \
 	ui/replacement-table-dialog.cc \
 	ui/replacement-table-dialog.h \
 	utils/user-configuration.cc \
-	utils/user-configuration.h
+	utils/user-configuration.h \
+	converters/html-converter-base.cc \
+	converters/html-converter-base.h
 
 rune_LDFLAGS = 
 
